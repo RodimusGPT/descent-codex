@@ -96,3 +96,7 @@ The agent maintains this file but does not self-certify visual correctness.
 - Playwright visual pass on June 27, 2026: captured desktop/mobile screenshots for
   `/parts/1-transformer/` and `/parts/5-synthesis/`. The pass found the Part 5 recap table was
   clipped on mobile; it now stacks into labeled rows at the mobile breakpoint.
+- Follow-up Playwright visual pass on June 27, 2026: captured desktop/mobile screenshots for `/`,
+  all six public part pages, `/dev/`, and `/dev/config/`. The pass found the mobile header theme
+  toggle still occupied its own row and the landing page had excess dead space plus an orphan nav
+  card; both were corrected.

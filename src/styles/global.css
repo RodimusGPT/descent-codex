@@ -147,7 +147,7 @@ main {
   display: grid;
   gap: clamp(2rem, 5vw, 5rem);
   grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  min-height: 82vh;
+  min-height: clamp(28rem, 64vh, 42rem);
   place-items: center;
 }
 
@@ -227,8 +227,8 @@ main {
 .descent-nav {
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  margin-block: 2rem 5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block: 1rem 4rem;
 }
 
 .descent-nav a {
@@ -2719,15 +2719,34 @@ main {
     grid-template-columns: auto 1fr;
   }
 
+  .site-brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .site-header__nav {
     grid-column: 1 / -1;
+    grid-row: 2;
     justify-content: space-between;
   }
 
   .theme-toggle {
+    grid-column: 2;
+    grid-row: 1;
     justify-self: end;
     min-width: 4.5rem;
     padding-inline: 0.8rem;
+  }
+
+  .landing-hero {
+    min-height: auto;
+    padding-block: 2.5rem 1rem;
+    place-items: start stretch;
+  }
+
+  .descent-nav {
+    grid-template-columns: 1fr;
+    margin-block: 1.5rem 4rem;
   }
 
   .part-hero {
