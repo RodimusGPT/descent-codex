@@ -66,5 +66,15 @@ The agent maintains this file but does not self-certify visual correctness.
   bandwidth slope toward the compute roof.
 - Parallelism: inspect `/dev/parallelism`; confirm TP, PP, and EP show different communication
   patterns clearly.
+- Part 0: inspect `/parts/0-hook`; confirm the prompt-to-token hook immediately explains
+  autoregressive next-token generation.
+- PromptToken: inspect `/dev/prompt-token`; confirm prompt edits and temperature changes update
+  tokenization, candidate probabilities, and selected token clearly.
+- Part 5: inspect `/parts/5-synthesis`; confirm the replay ties text, model, numbers, software,
+  hardware, and output into one loop.
+- FullStackReplay: inspect `/dev/full-stack`; confirm step controls move through the descent in
+  order and the active panel is obvious.
+- ConfigSandbox: inspect `/dev/config`; confirm model, quant, GPU, and context controls update
+  fit status, memory totals, and throughput estimate.
 - Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
   review flow clear.

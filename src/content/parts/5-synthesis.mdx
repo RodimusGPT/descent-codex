@@ -5,39 +5,33 @@ question: Now show me the whole thing.
 accent: synthesis
 ---
 
+import ConfigSandbox from "../../components/viz/ConfigSandbox";
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import FullStackReplay from "../../components/viz/FullStackReplay";
 import Token from "../../components/scroll/Token";
 
 # Put it together
 
-The final part replays the opening prompt after every layer has been explained.
-The reader should be able to follow one <Token text="token" /> from text, to model,
-to numbers, to software, to hardware, and back to text.
+The opening prompt is now legible as a full stack. A <Token text="token" /> starts
+as text, becomes IDs and vectors, moves through attention and feed-forward layers,
+uses weights stored in finite precision, enters a serving loop with KV cache, and
+lands on tensor cores and memory bandwidth before one visible next token appears.
 
-<ScrollScene
-  client:load
-  title="Synthesis placeholder"
-  steps={[
-    {
-      id: "model",
-      narration: "The token enters the transformer.",
-      visualLabel: "Model layer recap.",
-    },
-    {
-      id: "numbers",
-      narration: "Weights and activations become numerical work.",
-      visualLabel: "Numbers layer recap.",
-    },
-    {
-      id: "hardware",
-      narration: "Software schedules the hardware path that produces the next token.",
-      visualLabel: "Full-stack replay arrives in M8.",
-    },
-  ]}
-/>
+<FullStackReplay client:load />
 
-<DeeperBlock summary="Go deeper">
-  M8 will turn this placeholder into the through-line replay and optional configuration
-  sandbox.
+## Configure the path
+
+The same model can feel very different depending on quantization, context length,
+and hardware. A small quantized model may fit comfortably on a workstation GPU.
+A larger FP16 model may need a datacenter card just to load the weights, before
+the KV cache and runtime overhead are counted.
+
+<ConfigSandbox client:load />
+
+<DeeperBlock summary="What the estimate leaves out">
+  The sandbox is a first-order bound, not a benchmark. Real throughput also depends
+  on kernels, batching, prompt length distribution, sampler overhead, CPU/GPU
+  transfer, parallelism strategy, and how much of the model is active for a token.
+  It is still useful because the dominant terms are the same ones from the descent:
+  weight bytes, KV cache bytes, and bandwidth.
 </DeeperBlock>

@@ -2109,6 +2109,269 @@ main {
   border-color: var(--color-active-strong);
 }
 
+.synthesis-viz {
+  align-content: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.synthesis-viz__header {
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
+}
+
+.synthesis-viz__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+
+.synthesis-viz__header p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.synthesis-controls,
+.prompt-token__controls,
+.config-sandbox__controls {
+  align-items: stretch;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  padding: 0.75rem;
+}
+
+.synthesis-controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.synthesis-controls button,
+.config-sandbox__controls button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.synthesis-controls button:focus-visible,
+.full-stack-replay__rail button:focus-visible,
+.prompt-token__controls textarea:focus-visible,
+.prompt-token__controls input:focus-visible,
+.config-sandbox__controls button:focus-visible,
+.config-sandbox__controls input:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.prompt-token__controls label,
+.config-sandbox__controls label,
+.config-sandbox__controls .viz-controls {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.prompt-token__controls textarea {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  line-height: 1.55;
+  padding: 0.85rem;
+  resize: vertical;
+}
+
+.prompt-token__controls input,
+.config-sandbox__controls input {
+  accent-color: var(--color-active);
+  width: 100%;
+}
+
+.prompt-token__stage,
+.full-stack-replay__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.prompt-token__stage {
+  grid-template-columns: minmax(280px, 0.45fr) minmax(280px, 0.55fr);
+}
+
+.prompt-token__context,
+.prompt-token__candidates {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.prompt-token__context {
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.prompt-token__candidate {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(70px, 0.25fr) minmax(120px, 1fr) auto;
+}
+
+.prompt-token__candidate span {
+  font-family: var(--font-mono);
+  font-weight: 900;
+}
+
+.prompt-token__candidate meter {
+  width: 100%;
+}
+
+.full-stack-replay__stage {
+  grid-template-columns: minmax(180px, 0.28fr) minmax(280px, 1fr);
+}
+
+.full-stack-replay__rail {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.full-stack-replay__rail button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 900;
+  padding: 0.75rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.full-stack-replay__rail button[aria-pressed="true"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.full-stack-replay__panel {
+  align-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  min-height: 18rem;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.full-stack-replay__panel h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.full-stack-replay__panel p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 640px;
+}
+
+.full-stack-replay__panel--hardware,
+.full-stack-replay__panel--software {
+  border-color: var(--color-hw-accent);
+}
+
+.full-stack-replay__panel--numbers,
+.full-stack-replay__panel--model {
+  border-color: var(--color-model-accent);
+}
+
+.config-sandbox__bar {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-height: 4rem;
+  overflow: hidden;
+}
+
+.config-sandbox__bar span {
+  align-items: center;
+  background: linear-gradient(
+      90deg,
+      var(--color-active-wash) calc(var(--config-share, 0) * 100%),
+      transparent 0
+    ), var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  font-weight: 900;
+  height: 100%;
+  min-height: 4rem;
+  padding: 1rem;
+  text-transform: uppercase;
+}
+
+.synthesis-readout {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0;
+}
+
+.synthesis-readout div {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.synthesis-readout dt {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.synthesis-readout dd {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+}
+
 .prefill-decode {
   align-content: start;
   background: var(--color-surface);
@@ -2376,6 +2639,7 @@ main {
   .quantization-slider__header,
   .serving-viz__header,
   .hardware-viz__header,
+  .synthesis-viz__header,
   .prefill-decode__header,
   .review-layout,
   .review-overview,
@@ -2388,6 +2652,8 @@ main {
   .speculative-lane,
   .gpu-floorplan__stage,
   .flash-attention__stage,
+  .prompt-token__stage,
+  .full-stack-replay__stage,
   .prefill-settings {
     grid-template-columns: 1fr;
   }
@@ -2416,6 +2682,7 @@ main {
   .qkv-viz__scores div,
   .moe-router__expert,
   .sampling-bar,
+  .prompt-token__candidate,
   .weight-zoom__model {
     grid-template-columns: 1fr;
   }

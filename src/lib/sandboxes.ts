@@ -3,6 +3,7 @@ export type Sandbox = {
   part: number;
   path: string;
   slug:
+    | "prompt-token"
     | "tokenizer"
     | "embedding"
     | "stack"
@@ -22,11 +23,20 @@ export type Sandbox = {
     | "gemm-tiling"
     | "flash-attention"
     | "roofline"
-    | "parallelism";
+    | "parallelism"
+    | "full-stack"
+    | "config";
   title: string;
 };
 
 export const SANDBOXES = [
+  {
+    label: "Prompt to token",
+    part: 0,
+    path: "/dev/prompt-token",
+    slug: "prompt-token",
+    title: "Prompt to token",
+  },
   {
     label: "Tokenizer",
     part: 1,
@@ -166,5 +176,19 @@ export const SANDBOXES = [
     path: "/dev/parallelism",
     slug: "parallelism",
     title: "Parallelism",
+  },
+  {
+    label: "Full-stack replay",
+    part: 5,
+    path: "/dev/full-stack",
+    slug: "full-stack",
+    title: "Full-stack replay",
+  },
+  {
+    label: "Config sandbox",
+    part: 5,
+    path: "/dev/config",
+    slug: "config",
+    title: "Config sandbox",
   },
 ] as const satisfies readonly Sandbox[];

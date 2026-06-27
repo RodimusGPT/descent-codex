@@ -71,3 +71,10 @@
   the memory hierarchy plus tensor-core work path rather than spatially accurate chip layout.
 - Used illustrative hardware presets in `hardware.ts` for roofline behavior. The visual teaches the
   compute-roof vs bandwidth-slope relationship without tying the copy to one exact GPU SKU.
+
+## M8
+
+- Added the optional `ConfigSandbox` because the existing memory, quantization, and hardware
+  helpers made a useful first-order estimate small enough to keep in scope.
+- Kept prompt prediction deterministic and illustrative. The hook teaches next-token continuation,
+  not real model inference against a live vocabulary.

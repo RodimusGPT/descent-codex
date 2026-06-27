@@ -17,6 +17,7 @@ describe("descent spine", () => {
 
   it("defines review sandboxes in milestone order", () => {
     expect(SANDBOXES.map((sandbox) => sandbox.path)).toEqual([
+      "/dev/prompt-token",
       "/dev/tokenizer",
       "/dev/embedding",
       "/dev/stack",
@@ -37,9 +38,11 @@ describe("descent spine", () => {
       "/dev/flash-attention",
       "/dev/roofline",
       "/dev/parallelism",
+      "/dev/full-stack",
+      "/dev/config",
     ]);
     expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([
-      1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4,
+      0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5,
     ]);
   });
 });

@@ -6,37 +6,24 @@ accent: hook
 ---
 
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import PromptToken from "../../components/viz/PromptToken";
 import Token from "../../components/scroll/Token";
 
 # Hook
 
-A prompt is text the model continues. The finished site will make the generated
-<Token text="token" /> the character that moves through every layer of the stack.
+A prompt is just text the model continues. When you press enter, the system does
+not retrieve a finished answer from a database. It repeatedly asks one question:
+given the context so far, which <Token text="token" /> should come next?
 
-<ScrollScene
-  client:load
-  title="Hook placeholder"
-  steps={[
-    {
-      id: "prompt",
-      narration: "The reader enters a prompt. For now this is a placeholder for the Part 0 hook.",
-      visualLabel: "Prompt text enters the system.",
-    },
-    {
-      id: "candidate",
-      narration: "The model scores many possible next tokens.",
-      visualLabel: "Candidate tokens compete.",
-    },
-    {
-      id: "chosen",
-      narration: "One token is selected and appended before the loop repeats.",
-      visualLabel: "The selected token becomes new context.",
-    },
-  ]}
-/>
+<PromptToken client:load />
 
-<DeeperBlock summary="Go deeper">
-  Later milestones will replace this stub with a prompt-to-token interaction and precise
-  mechanics for autoregressive generation.
+The selected token is appended to the context, so the next step sees a slightly
+longer prompt. That simple loop is why the rest of the descent matters. The model
+creates the distribution, weights store what it learned, serving software keeps
+the loop efficient, and hardware supplies the matrix math and memory bandwidth.
+
+<DeeperBlock summary="Autoregressive loop">
+  Autoregressive generation means `context -> logits -> sample -> append -> repeat`.
+  The model is not planning the whole answer in one pass. It is repeatedly scoring
+  a vocabulary-sized list of next-token candidates under the current context.
 </DeeperBlock>

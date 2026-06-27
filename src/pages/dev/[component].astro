@@ -1,9 +1,11 @@
 ---
 import AttentionFan from "../../components/viz/AttentionFan";
 import BatchingTimeline from "../../components/viz/BatchingTimeline";
+import ConfigSandbox from "../../components/viz/ConfigSandbox";
 import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
 import FlashAttention from "../../components/viz/FlashAttention";
 import FloatExploder from "../../components/viz/FloatExploder";
+import FullStackReplay from "../../components/viz/FullStackReplay";
 import GemmTiling from "../../components/viz/GemmTiling";
 import GpuFloorplan from "../../components/viz/GpuFloorplan";
 import MemoryBudget from "../../components/viz/MemoryBudget";
@@ -11,6 +13,7 @@ import MoERouter from "../../components/viz/MoERouter";
 import PagedAttention from "../../components/viz/PagedAttention";
 import Parallelism from "../../components/viz/Parallelism";
 import PrefillDecode from "../../components/viz/PrefillDecode";
+import PromptToken from "../../components/viz/PromptToken";
 import QKVMultiHead from "../../components/viz/QKVMultiHead";
 import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import Roofline from "../../components/viz/Roofline";
@@ -62,6 +65,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
       </aside>
 
       <section class="review-workspace" aria-label={`${activeSandbox.label} sandbox`}>
+        {component === "prompt-token" ? <PromptToken client:load /> : null}
         {component === "tokenizer" ? <Tokenizer client:load /> : null}
         {component === "embedding" ? <EmbeddingSpace client:load /> : null}
         {component === "stack" ? <TransformerStack client:load /> : null}
@@ -82,6 +86,8 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "flash-attention" ? <FlashAttention client:load /> : null}
         {component === "roofline" ? <Roofline client:load /> : null}
         {component === "parallelism" ? <Parallelism client:load /> : null}
+        {component === "full-stack" ? <FullStackReplay client:load /> : null}
+        {component === "config" ? <ConfigSandbox client:load /> : null}
       </section>
     </div>
   </main>
