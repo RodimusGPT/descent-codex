@@ -32,3 +32,8 @@
   vs quadratic shape.
 - The KV grid displays a fixed number of representative cells while the slider drives the actual
   memory formula. This keeps the animation legible across context lengths.
+
+## M3 checkpoint
+
+- Allowed the Console review host in Astro's Vite dev-server config so the checkpoint server can
+  be opened through the forwarded URL.
