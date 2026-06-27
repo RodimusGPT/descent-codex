@@ -11,7 +11,7 @@ const Tokenizer = () => {
       <div className="m4-panel__header">
         <p className="eyebrow">Tokenizer</p>
         <h2 id="tokenizer-title">Text becomes token IDs</h2>
-        <p>Type text and watch it split into word, subword, and punctuation pieces.</p>
+        <p>Type text and watch a toy splitter approximate word, subword, and punctuation pieces.</p>
       </div>
       <label className="tokenizer-viz__input">
         Prompt text
@@ -28,7 +28,10 @@ const Tokenizer = () => {
           />
         ))}
       </div>
-      <p className="m4-note">{tokens.length} tokens. Subword pieces are highlighted.</p>
+      <p className="m4-note">
+        {tokens.length} tokens. Subword pieces are highlighted; production BPE or unigram tokenizers
+        use learned vocabularies and can split text differently.
+      </p>
     </section>
   );
 };

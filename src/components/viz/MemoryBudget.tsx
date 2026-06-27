@@ -4,27 +4,31 @@ import { formatBytes, kvCacheBytes, memoryBudgetBreakdown } from "../../lib/memo
 import { PRECISION_SPECS, type PrecisionId, getPrecisionSpec } from "../../lib/quant";
 
 const precisionIds = Object.keys(PRECISION_SPECS) as PrecisionId[];
-const modelPresets = [7, 70] as const;
+const modelPresets = [
+  { headDim: 128, label: "7B", layers: 32, paramsBillions: 7, kvHeads: 8 },
+  { headDim: 128, label: "70B", layers: 80, paramsBillions: 70, kvHeads: 8 },
+] as const;
 
 const MemoryBudget = () => {
-  const [paramsBillions, setParamsBillions] = useState(7);
+  const [modelIndex, setModelIndex] = useState(0);
   const [precision, setPrecision] = useState<PrecisionId>("Q4");
   const [contextLength, setContextLength] = useState(4096);
+  const model = modelPresets[modelIndex] ?? modelPresets[0];
   const kvBytes = kvCacheBytes({
     bytesPerValue: 2,
-    headDim: 128,
-    nKvHeads: 8,
-    nLayers: 32,
+    headDim: model.headDim,
+    nKvHeads: model.kvHeads,
+    nLayers: model.layers,
     seqLen: contextLength,
   });
   const budget = useMemo(
     () =>
       memoryBudgetBreakdown({
         kvBytes,
-        paramsBillions,
+        paramsBillions: model.paramsBillions,
         weightBytesPerParam: getPrecisionSpec(precision).bytesPerParam,
       }),
-    [kvBytes, paramsBillions, precision],
+    [kvBytes, model.paramsBillions, precision],
   );
   const bars = [
     { bytes: budget.weightBytes, id: "weights", label: "weights" },
@@ -42,14 +46,14 @@ const MemoryBudget = () => {
 
       <div className="memory-budget__controls">
         <div className="viz-controls" aria-label="Model size">
-          {modelPresets.map((preset) => (
+          {modelPresets.map((preset, index) => (
             <button
-              aria-pressed={paramsBillions === preset}
-              key={preset}
-              onClick={() => setParamsBillions(preset)}
+              aria-pressed={modelIndex === index}
+              key={preset.label}
+              onClick={() => setModelIndex(index)}
               type="button"
             >
-              {preset}B
+              {preset.label}
             </button>
           ))}
         </div>

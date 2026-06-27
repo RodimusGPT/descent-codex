@@ -19,7 +19,9 @@ The software loop from Part 3 ultimately becomes tensor math and memory traffic.
 Each <Token text="token" /> step reads weights, moves activations through caches,
 and asks tensor cores to multiply tiled matrices. The hardware question is not
 only "how many FLOPs?" It is whether the bytes arrive fast enough for those FLOPs
-to matter.
+to matter. For the running <Token text="decode" /> step, the expensive part is
+not displaying the word. It is reading the relevant weights and cached context
+fast enough to produce the next distribution.
 
 ## The GPU and memory hierarchy
 
@@ -72,7 +74,9 @@ and a memory-bandwidth slope. Decode at batch 1 tends to sit on the bandwidth
 slope because every token reads a large amount of weight data. Larger batches
 reuse those weights across more tokens, raising arithmetic intensity toward the
 compute roof. Prefill is naturally more compute-heavy because it processes many
-prompt tokens in parallel.
+prompt tokens in parallel. A roofline chart is not a benchmark; it is a way to
+ask which resource is the first-order limiter before kernel details, scheduling,
+and communication overhead are added.
 
 <Roofline client:visible />
 
@@ -82,7 +86,10 @@ One GPU is often not enough. Tensor parallelism shards matrices across devices a
 then all-reduces partial results. Pipeline parallelism splits layers into stages
 and tries to keep microbatches flowing without bubbles. Expert parallelism
 distributes MoE experts and routes tokens through all-to-all traffic. Every split
-buys capacity or throughput by spending network bandwidth.
+buys capacity or throughput by spending network bandwidth. The right split
+depends on the bottleneck: tensor parallelism helps when a layer is too wide,
+pipeline parallelism helps when the stack is too deep for one device, and expert
+parallelism helps when MoE experts do not all need to be active for each token.
 
 <Parallelism client:visible />
 
@@ -91,4 +98,11 @@ buys capacity or throughput by spending network bandwidth.
   This is why weight quantization, KV-cache size, batch reuse, and active-parameter
   count all show up as speed questions. MoE can be fast because inactive experts
   are not read for a given token, even though their weights still occupy memory.
+</DeeperBlock>
+
+<DeeperBlock summary="Why parallelism is not free speed">
+  Splitting work creates communication. Tensor parallelism pays all-reduce latency,
+  pipeline parallelism pays scheduling bubbles, and expert parallelism pays
+  all-to-all routing. It matters when one device cannot fit the model or when
+  throughput gains outweigh the added network traffic.
 </DeeperBlock>

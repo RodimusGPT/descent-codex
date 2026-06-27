@@ -85,3 +85,13 @@
   `/dev` sandboxes on `client:load` so isolated review pages hydrate immediately.
 - Added a header theme toggle on top of system color-scheme detection to make light/dark contrast
   checks explicit during QA.
+
+## Post-M9 content audit
+
+- Added one running toy prompt, `The GPU keeps KV cache ready for`, across the narrative and replay
+  copy so the descent has a concrete through-line rather than isolated chapter examples.
+- Labeled tokenizer, prompt prediction, sampling, config, and roofline widgets as simplified
+  teaching models where appropriate. The site explains real mechanisms, but the displayed IDs,
+  candidate probabilities, and throughput estimates are illustrative.
+- Updated `MemoryBudget` so the 70B preset changes the KV-cache layer shape instead of reusing the
+  7B-style layer count. This keeps the educational readout aligned with the synthesis sandbox.

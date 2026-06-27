@@ -1044,6 +1044,42 @@ main {
   margin: 0;
 }
 
+.content-recap {
+  overflow-x: auto;
+}
+
+.content-recap table {
+  border-collapse: collapse;
+  min-width: 720px;
+  width: 100%;
+}
+
+.content-recap th,
+.content-recap td {
+  border: 1px solid var(--color-border);
+  line-height: 1.5;
+  padding: 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.content-recap th {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.content-recap td {
+  color: var(--color-text-muted);
+}
+
+.content-recap td:first-child {
+  color: var(--color-text);
+  font-weight: 800;
+}
+
 .attention-fan {
   align-content: start;
   background: var(--color-surface);

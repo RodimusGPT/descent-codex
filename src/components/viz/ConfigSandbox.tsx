@@ -35,8 +35,8 @@ const ConfigSandbox = () => {
           <h2 id="config-title">Model, quant, GPU: does it fit?</h2>
         </div>
         <p>
-          Weight bytes, KV cache, runtime overhead, and memory bandwidth combine into a rough
-          fit-and-throughput estimate.
+          Weight bytes, KV cache, runtime overhead, and memory bandwidth combine into a first-order
+          fit-and-throughput estimate, not a benchmark.
         </p>
       </div>
 

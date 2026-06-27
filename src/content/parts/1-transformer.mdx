@@ -29,7 +29,9 @@ The prompt starts as plain text. Before the model can use it, a tokenizer splits
 that text into subword pieces and maps each piece to an integer ID from the
 vocabulary. Many common words are one token; rare or compound words are assembled
 from smaller pieces. The important thing is that the model never sees raw
-characters. It sees a sequence of token IDs.
+characters. It sees a sequence of token IDs. In the running prompt,
+`The GPU keeps KV cache ready for`, tokenization is the step that turns words and
+punctuation into the integer sequence the model can actually process.
 
 <Tokenizer client:visible />
 
@@ -49,6 +51,26 @@ relationships. This is why a token can carry more than spelling; it arrives with
 contextual affordances the stack can work with.
 
 <EmbeddingSpace client:visible />
+
+## Position and the causal mask
+
+Embeddings tell the model what each token is, but not where it is. A transformer
+also needs position information so `cache ready for decode` is different from
+`decode ready for cache`. Modern LLMs commonly use RoPE, or rotary positional
+embedding, which rotates query and key vectors in a position-dependent way before
+attention scores are computed.
+
+During generation, attention is also causal. The token at position 5 can read
+positions 0 through 5, but it cannot read a future token that has not been
+generated yet. That mask is what makes the training-time prediction task match
+the inference-time loop.
+
+<DeeperBlock summary="Why RoPE matters later">
+  RoPE makes relative position visible inside the `Q dot K` attention score. It is
+  one reason context length, long-context extrapolation, and KV-cache reuse are
+  not just storage questions. The cached keys already contain the positional
+  treatment they had when they were created.
+</DeeperBlock>
 
 ## The stack
 
@@ -71,7 +93,9 @@ lets shallow pattern matches turn into more abstract features.
 Attention is how one token reads other tokens in the same context. For a selected
 query token, the model assigns weights over prior and nearby tokens, then blends
 their value vectors. Different heads can specialize: one may look backward, one
-may bridge syntax, and another may spread context broadly.
+may bridge syntax, and another may spread context broadly. For the running prompt,
+the position after `for` might attend strongly to `GPU`, `KV`, and `cache`
+because those earlier tokens constrain what a plausible next token can be.
 
 <AttentionFan client:visible />
 
@@ -90,6 +114,15 @@ heads, which matters later because fewer KV heads shrink the cache in Part 3.
   For one head, the core operation is
   `softmax(QK^T / sqrt(d_head)) V`. Causal masking prevents a token from reading
   future tokens during generation.
+</DeeperBlock>
+
+<DeeperBlock summary="Why GQA and MQA exist">
+  Full multi-head attention stores separate keys and values for every query head.
+  Grouped-query attention shares each K/V head across a group of query heads, and
+  multi-query attention shares one K/V set even more aggressively. The benefit is
+  a smaller KV cache and less memory traffic during decode. The cost is less K/V
+  specialization, so model designers choose the sharing pattern rather than
+  treating it as a free compression step.
 </DeeperBlock>
 
 ## FFN and MoE
@@ -116,6 +149,8 @@ vocabulary item. Temperature changes how sharp the distribution is. Top-k keeps
 only the highest ranked candidates; top-p keeps the smallest set whose cumulative
 probability crosses a threshold. A token is sampled, appended to the context, and
 the whole loop repeats. That autoregressive loop is what makes the KV cache in
-Part 3 necessary.
+Part 3 necessary. If the next sampled token is <Token text="decode" />, the next
+step runs again with `The GPU keeps KV cache ready for decode` as the longer
+context.
 
 <SamplingPlayground client:visible />

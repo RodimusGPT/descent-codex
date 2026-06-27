@@ -4,7 +4,7 @@ import { promptCandidates } from "../../lib/synthesis";
 import { tokenizeText } from "../../lib/transformer";
 import Token from "../scroll/Token";
 
-const DEFAULT_PROMPT = "Explain why the GPU keeps KV cache close";
+const DEFAULT_PROMPT = "The GPU keeps KV cache ready for";
 
 const PromptToken = () => {
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
@@ -21,8 +21,8 @@ const PromptToken = () => {
           <h2 id="prompt-token-title">The model continues the text</h2>
         </div>
         <p>
-          A prompt becomes token IDs. The model scores possible next tokens, samples one, appends
-          it, and repeats.
+          A prompt becomes token IDs. This toy scorer ranks a small candidate set, appends the
+          displayed next token, and repeats.
         </p>
       </div>
 
@@ -75,7 +75,7 @@ const PromptToken = () => {
           <dd>{tokens.length}</dd>
         </div>
         <div>
-          <dt>Selected</dt>
+          <dt>Displayed next</dt>
           <dd>{selected?.token}</dd>
         </div>
         <div>

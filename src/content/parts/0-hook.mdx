@@ -15,6 +15,11 @@ A prompt is just text the model continues. When you press enter, the system does
 not retrieve a finished answer from a database. It repeatedly asks one question:
 given the context so far, which <Token text="token" /> should come next?
 
+For the rest of the descent, keep one concrete toy prompt in mind:
+`The GPU keeps KV cache ready for`. The examples will follow how a next token
+like <Token text="decode" /> can move from text, to numbers, to serving state,
+to hardware work, and back to visible text.
+
 <PromptToken client:visible />
 
 The selected token is appended to the context, so the next step sees a slightly
@@ -26,4 +31,12 @@ the loop efficient, and hardware supplies the matrix math and memory bandwidth.
   Autoregressive generation means `context -> logits -> sample -> append -> repeat`.
   The model is not planning the whole answer in one pass. It is repeatedly scoring
   a vocabulary-sized list of next-token candidates under the current context.
+</DeeperBlock>
+
+<DeeperBlock summary="How literal are the demos?">
+  The widgets use small, inspectable simulations so the moving parts are visible.
+  A production model has a real tokenizer, billions of weights, a much larger
+  vocabulary, and engine-specific kernels. The shape of the loop is real; the
+  displayed token IDs, probabilities, timings, and memory estimates are teaching
+  approximations unless the text says otherwise.
 </DeeperBlock>

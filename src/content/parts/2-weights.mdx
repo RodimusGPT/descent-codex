@@ -18,7 +18,10 @@ In Part 1, the model looked like layers moving information between tokens. Zoom
 in one level and those layers are mostly matrices full of learned numbers. Running
 the model means moving the current <Token text="token" /> representation through
 those matrices again and again. The exact way those numbers are stored controls
-memory use, model fit, and how much data has to move during inference.
+memory use, model fit, and how much data has to move during inference. In the
+running example, the representation that may become <Token text="decode" /> is
+not a word inside the stack. It is a vector repeatedly multiplied by weight
+matrices.
 
 ## From model to one weight
 
@@ -37,7 +40,9 @@ positive or negative. The exponent sets the scale. The mantissa stores precision
 within that scale. FP32 uses many mantissa bits and a broad exponent range. FP16
 uses fewer total bits and has a smaller exponent range. BF16 keeps FP32's
 exponent width but gives up mantissa precision, which is why it can represent very
-large and very small values while being coarser.
+large and very small values while being coarser. Inference usually keeps
+accumulation and some activations at higher precision than the stored weights,
+because rounding error in one layer can be amplified by later layers.
 
 <FloatExploder client:visible />
 
@@ -55,7 +60,9 @@ of approximation error. In practice, a bigger model at lower precision often
 beats a much smaller model at higher precision, because the larger model still
 contains more learned structure. GGUF k-quants push this further by mixing
 precision choices across tensors or layers instead of treating every weight the
-same.
+same. Quantization is a storage and math approximation, so it can change logits
+slightly. Good quantization tries to make those changes small enough that the
+visible output distribution mostly behaves like the original model.
 
 <QuantizationSlider client:visible />
 
@@ -67,6 +74,14 @@ same.
   work around the matrix multiply.
 </DeeperBlock>
 
+<DeeperBlock summary="Why quantization is not just smaller files">
+  Smaller weights reduce the bytes read for each decode step, which can increase
+  tokens per second when the bottleneck is memory bandwidth. The cost is
+  reconstruction error, scale metadata, and sometimes specialized kernels. It
+  matters most when a model is close to the VRAM limit or when decode is bandwidth
+  bound.
+</DeeperBlock>
+
 ## Memory math
 
 The first budget is simple: `params * bytes per parameter`. A 7B model in FP16 is
@@ -74,7 +89,9 @@ about 14 GB before runtime overhead. Q4 cuts that to roughly 3.5 GB, which match
 the rough rule of thumb `size_B * 0.6 ~= Q4 GB` once metadata and packaging are
 included. KV cache is separate: it grows with context length, batch size, layers,
 KV heads, and head dimension. That is why long-context serving can run out of
-memory even when the weights fit.
+memory even when the weights fit. For the running prompt, prefill creates KV
+entries for the prompt tokens before any visible <Token text="decode" /> token is
+emitted. Each extra generated token extends that cache.
 
 <MemoryBudget client:visible />
 

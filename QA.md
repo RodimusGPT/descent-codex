@@ -82,3 +82,14 @@ The agent maintains this file but does not self-certify visual correctness.
   Accessibility 100 and `/parts/1-transformer/` at Performance 92 / Accessibility 100.
 - Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
   review flow clear.
+
+## Post-M9 Content Audit
+
+- Content: confirm the running prompt `The GPU keeps KV cache ready for` is easy to follow from
+  Part 0 through Part 5 and that the new Part 5 recap table clarifies behavior-changing choices
+  versus serving-efficiency choices.
+- Demo framing: confirm tokenizer, prompt-token, sampling, config, and roofline copy clearly mark
+  simplified teaching estimates without making the pages feel caveated to death.
+- Automated checks on June 27, 2026: `bun run check` passed, `bun run build` passed, and route
+  smokes returned 200 for `/parts/0-hook/` through `/parts/5-synthesis/` plus the changed `/dev`
+  sandboxes.

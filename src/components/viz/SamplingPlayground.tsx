@@ -52,7 +52,10 @@ const SamplingPlayground = () => {
       <div className="m4-panel__header">
         <p className="eyebrow">Sampling</p>
         <h2 id="sampling-title">Logits become the next token</h2>
-        <p>Temperature, top-k, and top-p reshape the distribution before one token is sampled.</p>
+        <p>
+          Temperature, top-k, and top-p reshape this toy distribution before the preview shows which
+          candidates remain eligible.
+        </p>
       </div>
       <div className="sampling-playground__controls">
         <label>

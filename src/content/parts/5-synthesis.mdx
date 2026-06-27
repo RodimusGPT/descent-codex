@@ -19,12 +19,32 @@ lands on tensor cores and memory bandwidth before one visible next token appears
 
 <FullStackReplay client:visible />
 
+## One concrete pass
+
+Take the running prompt: `The GPU keeps KV cache ready for`. Tokenization turns it
+into IDs. Embeddings and RoPE give those IDs content and position. Attention lets
+the position after `for` read earlier tokens like `GPU`, `KV`, and `cache`.
+Feed-forward layers transform the stream, and the final projection produces logits
+over the vocabulary. Sampling may choose <Token text="decode" />.
+
+The system then appends that token and repeats. The serving engine keeps the
+prompt's keys and values in cache so the next decode step does not recompute the
+whole prompt. The hardware still has to read weights, move cached values, and run
+the tiled matrix math for each new token.
+
 ## Configure the path
 
 The same model can feel very different depending on quantization, context length,
 and hardware. A small quantized model may fit comfortably on a workstation GPU.
 A larger FP16 model may need a datacenter card just to load the weights, before
 the KV cache and runtime overhead are counted.
+
+For example, a 7B dense model at Q4 is roughly 3.5 GB of raw weight bytes. With a
+4k context, GQA-style KV cache, and runtime overhead, the first-order estimate is
+still comfortably inside a 24 GB workstation GPU. A 70B model at FP16 is a
+different class of problem: the weights alone are far beyond that card. The same
+architecture idea is running, but the capacity and bandwidth terms dominate the
+deployment decision.
 
 <ConfigSandbox client:visible />
 
@@ -35,3 +55,59 @@ the KV cache and runtime overhead are counted.
   It is still useful because the dominant terms are the same ones from the descent:
   weight bytes, KV cache bytes, and bandwidth.
 </DeeperBlock>
+
+## What changes behavior?
+
+<section className="content-recap" aria-label="Behavior and efficiency recap">
+  <table>
+    <thead>
+      <tr>
+        <th>Choice</th>
+        <th>Can change output?</th>
+        <th>Primary reason to care</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Prompt and tokenizer</td>
+        <td>Yes</td>
+        <td>They define the exact context IDs the model sees.</td>
+      </tr>
+      <tr>
+        <td>Weights and architecture</td>
+        <td>Yes</td>
+        <td>They define the learned function from context to logits.</td>
+      </tr>
+      <tr>
+        <td>Quantization</td>
+        <td>Sometimes</td>
+        <td>It saves memory and bandwidth but approximates the original weights.</td>
+      </tr>
+      <tr>
+        <td>Sampling settings</td>
+        <td>Yes</td>
+        <td>They reshape or filter the next-token distribution.</td>
+      </tr>
+      <tr>
+        <td>Batching, paging, prefix caching</td>
+        <td>No, if implemented exactly</td>
+        <td>They improve throughput, latency, and memory use.</td>
+      </tr>
+      <tr>
+        <td>Speculative decoding</td>
+        <td>No, for exact verification</td>
+        <td>It spends draft-model work to reduce target-model decode latency.</td>
+      </tr>
+      <tr>
+        <td>Hardware and parallelism</td>
+        <td>No, in normal deterministic math bounds</td>
+        <td>They decide whether the model fits and how quickly tokens arrive.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+The practical mental model is compact: the model decides the distribution, the
+sampler chooses from it, the serving engine keeps the loop full, and the hardware
+sets the capacity and bandwidth envelope. Most inference debugging is figuring
+out which one of those layers is actually limiting the next token.

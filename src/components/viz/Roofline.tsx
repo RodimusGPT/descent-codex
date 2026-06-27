@@ -34,8 +34,8 @@ const Roofline = () => {
           <h2 id="roofline-title">Batch size moves decode up the roof</h2>
         </div>
         <p>
-          Arithmetic intensity is FLOPs per byte. Low intensity hits the memory-bandwidth slope;
-          high intensity reaches the compute roof.
+          Arithmetic intensity is FLOPs per byte. This simplified roofline shows when decode is
+          memory-limited before real kernel and scheduling overheads are included.
         </p>
       </div>
 

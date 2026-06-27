@@ -17,7 +17,10 @@ import Token from "../../components/scroll/Token";
 The model from Part 1 and the weights from Part 2 still need a serving loop. The
 software layer turns one request into scheduled GPU work, keeps each request's KV
 cache organized, and tries to hide latency without changing which
-<Token text="token" /> distribution the model would have produced.
+<Token text="token" /> distribution the model would have produced. That last
+boundary matters: tokenization, model weights, quantization, and sampling can
+change behavior; batching, paging, prefix caching, and exact speculative decoding
+are supposed to change speed or capacity while preserving the target model.
 
 ## Prefill, decode, and KV cache
 
@@ -25,7 +28,9 @@ Inference has two very different phases. Prefill processes the whole prompt in
 parallel and writes keys and values into the cache. Decode then runs one loop per
 new token: read the cache, compute the next logits, sample a token, append that
 token, and extend the cache. This is why time to first token often feels
-different from later token cadence.
+different from later token cadence. For `The GPU keeps KV cache ready for`,
+prefill handles the prompt tokens as a batch; the later <Token text="decode" />
+step is a single-position decode that reads the cached prompt.
 
 <PrefillDecode client:visible />
 
@@ -37,13 +42,23 @@ different from later token cadence.
   moving part of the memory problem back into projection math.
 </DeeperBlock>
 
+<DeeperBlock summary="Why MLA-style cache compression exists">
+  Long contexts and large batches can make KV cache rival or exceed weight memory.
+  Compressing the stored representation reduces memory pressure and bandwidth, but
+  the model architecture and kernels must know how to reconstruct or use that
+  latent form. It is an architecture choice, not a serving flag that can be turned
+  on for any checkpoint.
+</DeeperBlock>
+
 ## Batching and scheduling
 
 A serving engine rarely runs one conversation in isolation. It batches many decode
 steps together so the hardware sees enough work. Static batching waits for a
 group, runs that group, then admits the next group. Continuous batching keeps the
 loop open: finished requests leave, new requests join, and long prompts can be
-chunked so prefill work does not block every decode step behind it.
+chunked so prefill work does not block every decode step behind it. The tradeoff
+is latency policy: bigger batches improve hardware utilization, but individual
+requests can wait longer if admission is too conservative.
 
 <BatchingTimeline client:visible />
 
@@ -61,6 +76,9 @@ and output length. PagedAttention treats the cache more like virtual memory: eac
 sequence has logical blocks, and a block table points those logical blocks at
 physical pages. That reduces large contiguous allocation pressure, makes tail
 fragmentation visible, and allows shared prefixes to point at the same blocks.
+The cost is an extra indirection in the attention kernel, so the win depends on
+allocator pressure, sharing, and how efficiently the engine handles the block
+table.
 
 <PagedAttention client:visible />
 
@@ -106,7 +124,9 @@ Decode is serial, but it can still be accelerated. Speculative decoding runs a
 smaller draft model ahead for several candidate tokens, then asks the target
 model to verify those candidates in one pass. Accepted candidates are kept. At
 the first mismatch, the target model supplies the correction and the loop
-continues from there.
+continues from there. It helps most when the draft is much cheaper than the target
+and its proposed tokens are accepted often enough to pay for the verification
+pass.
 
 <SpeculativeDecoding client:visible />
 

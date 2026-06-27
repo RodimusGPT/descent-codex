@@ -91,32 +91,37 @@ export const GPU_CONFIGS = [
 
 export const STACK_REPLAY_STEPS = [
   {
-    detail: "The prompt is split into IDs and the current context asks for one next token.",
+    detail: "The prompt 'The GPU keeps KV cache ready for' is split into token IDs.",
     id: "text",
     label: "text",
   },
   {
-    detail: "Embeddings, attention, FFNs, and sampling turn context into next-token logits.",
+    detail:
+      "Embeddings, RoPE, attention, FFNs, and sampling turn that context into next-token logits.",
     id: "model",
     label: "model",
   },
   {
-    detail: "Weights, activations, and KV cache are stored as finite-precision numbers.",
+    detail:
+      "Weights, activations, and KV cache are finite-precision numbers, so storage format affects fit and bandwidth.",
     id: "numbers",
     label: "numbers",
   },
   {
-    detail: "The serving engine batches requests, pages KV cache, and schedules decode steps.",
+    detail:
+      "The serving engine prefills the prompt, stores KV cache, batches decode steps, and keeps the loop moving.",
     id: "software",
     label: "software",
   },
   {
-    detail: "Tensor cores run tiled GEMMs while HBM and SRAM decide the bottleneck.",
+    detail:
+      "Tensor cores run tiled GEMMs while HBM, SRAM, and network traffic decide the bottleneck.",
     id: "hardware",
     label: "hardware",
   },
   {
-    detail: "The sampled token is appended, then the whole loop repeats.",
+    detail:
+      "A token such as 'decode' is appended, then the whole stack repeats for the next token.",
     id: "output",
     label: "output",
   },
