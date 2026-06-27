@@ -100,3 +100,7 @@ The agent maintains this file but does not self-certify visual correctness.
   all six public part pages, `/dev/`, and `/dev/config/`. The pass found the mobile header theme
   toggle still occupied its own row and the landing page had excess dead space plus an orphan nav
   card; both were corrected.
+- Additional Playwright UI/UX/content pass on June 27, 2026: captured desktop/mobile screenshots
+  for representative public pages, review pages, and dark-mode samples. The pass found direct MDX
+  section headings were too visually subdued between large interactive cards; article `h2` styling
+  was strengthened for better long-page scanability.

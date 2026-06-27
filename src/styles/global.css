@@ -369,6 +369,12 @@ main {
   font-size: clamp(2rem, 4vw, 3.5rem);
 }
 
+.part-content > h2 {
+  color: var(--color-text);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  margin: 0.5rem 0 -0.35rem;
+}
+
 .token {
   align-items: center;
   background: var(--token-bg, var(--color-token-bg));
