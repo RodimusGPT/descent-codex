@@ -15,7 +15,7 @@ A prompt is just text the model continues. When you press enter, the system does
 not retrieve a finished answer from a database. It repeatedly asks one question:
 given the context so far, which <Token text="token" /> should come next?
 
-<PromptToken client:load />
+<PromptToken client:visible />
 
 The selected token is appended to the context, so the next step sees a slightly
 longer prompt. That simple loop is why the rest of the descent matters. The model

@@ -31,7 +31,7 @@ vocabulary. Many common words are one token; rare or compound words are assemble
 from smaller pieces. The important thing is that the model never sees raw
 characters. It sees a sequence of token IDs.
 
-<Tokenizer client:load />
+<Tokenizer client:visible />
 
 <DeeperBlock summary="Tokenizer detail">
   Production tokenizers are usually BPE-style or unigram-style systems learned from
@@ -48,7 +48,7 @@ similarly often end up near each other, and useful directions in the space encod
 relationships. This is why a token can carry more than spelling; it arrives with
 contextual affordances the stack can work with.
 
-<EmbeddingSpace client:load />
+<EmbeddingSpace client:visible />
 
 ## The stack
 
@@ -58,7 +58,7 @@ moves information between tokens, a residual path keeps the original stream
 available, and a feed-forward block does per-token compute. Repeating that block
 lets shallow pattern matches turn into more abstract features.
 
-<TransformerStack client:load />
+<TransformerStack client:visible />
 
 <DeeperBlock summary="Layer detail">
   A simplified layer is `x = x + Attention(RMSNorm(x))`, then
@@ -73,7 +73,7 @@ query token, the model assigns weights over prior and nearby tokens, then blends
 their value vectors. Different heads can specialize: one may look backward, one
 may bridge syntax, and another may spread context broadly.
 
-<AttentionFan client:load />
+<AttentionFan client:visible />
 
 ## Q, K, V, and multi-head attention
 
@@ -84,7 +84,7 @@ values are the information that gets mixed back in. Scores come from scaled
 several versions of this in parallel. GQA and MQA share K/V heads across query
 heads, which matters later because fewer KV heads shrink the cache in Part 3.
 
-<QKVMultiHead client:load />
+<QKVMultiHead client:visible />
 
 <DeeperBlock summary="Attention math">
   For one head, the core operation is
@@ -100,7 +100,7 @@ Experts models replace that with many expert FFNs and a router that activates
 only a top-k subset. That is how a model can have many total parameters while
 running only a smaller active fraction for a given token.
 
-<MoERouter client:load />
+<MoERouter client:visible />
 
 <DeeperBlock summary="Active vs total parameters">
   In an MoE layer, the router scores experts and sends the token to only a few of
@@ -118,4 +118,4 @@ probability crosses a threshold. A token is sampled, appended to the context, an
 the whole loop repeats. That autoregressive loop is what makes the KV cache in
 Part 3 necessary.
 
-<SamplingPlayground client:load />
+<SamplingPlayground client:visible />

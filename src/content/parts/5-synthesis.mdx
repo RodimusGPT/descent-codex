@@ -17,7 +17,7 @@ as text, becomes IDs and vectors, moves through attention and feed-forward layer
 uses weights stored in finite precision, enters a serving loop with KV cache, and
 lands on tensor cores and memory bandwidth before one visible next token appears.
 
-<FullStackReplay client:load />
+<FullStackReplay client:visible />
 
 ## Configure the path
 
@@ -26,7 +26,7 @@ and hardware. A small quantized model may fit comfortably on a workstation GPU.
 A larger FP16 model may need a datacenter card just to load the weights, before
 the KV cache and runtime overhead are counted.
 
-<ConfigSandbox client:load />
+<ConfigSandbox client:visible />
 
 <DeeperBlock summary="What the estimate leaves out">
   The sandbox is a first-order bound, not a benchmark. Real throughput also depends

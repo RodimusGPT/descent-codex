@@ -78,3 +78,10 @@
   helpers made a useful first-order estimate small enough to keep in scope.
 - Kept prompt prediction deterministic and illustrative. The hook teaches next-token continuation,
   not real model inference against a live vocabulary.
+
+## M9
+
+- Switched article-embedded islands to `client:visible` for final performance polish while leaving
+  `/dev` sandboxes on `client:load` so isolated review pages hydrate immediately.
+- Added a header theme toggle on top of system color-scheme detection to make light/dark contrast
+  checks explicit during QA.

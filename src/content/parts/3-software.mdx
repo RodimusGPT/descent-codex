@@ -27,7 +27,7 @@ new token: read the cache, compute the next logits, sample a token, append that
 token, and extend the cache. This is why time to first token often feels
 different from later token cadence.
 
-<PrefillDecode client:load />
+<PrefillDecode client:visible />
 
 <DeeperBlock summary="KV-cache shape">
   A simple KV-cache estimate is
@@ -45,7 +45,7 @@ group, runs that group, then admits the next group. Continuous batching keeps th
 loop open: finished requests leave, new requests join, and long prompts can be
 chunked so prefill work does not block every decode step behind it.
 
-<BatchingTimeline client:load />
+<BatchingTimeline client:visible />
 
 <DeeperBlock summary="Prefix caching and chunked prefill">
   Prefix caching lets multiple requests reuse the same already-prefilled prompt
@@ -62,7 +62,7 @@ sequence has logical blocks, and a block table points those logical blocks at
 physical pages. That reduces large contiguous allocation pressure, makes tail
 fragmentation visible, and allows shared prefixes to point at the same blocks.
 
-<PagedAttention client:load />
+<PagedAttention client:visible />
 
 ## Serving engines
 
@@ -108,7 +108,7 @@ model to verify those candidates in one pass. Accepted candidates are kept. At
 the first mismatch, the target model supplies the correction and the loop
 continues from there.
 
-<SpeculativeDecoding client:load />
+<SpeculativeDecoding client:visible />
 
 <DeeperBlock summary="Why speculation preserves the target model">
   The verifier does not blindly trust the draft. It checks the proposed token

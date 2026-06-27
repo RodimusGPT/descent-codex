@@ -13,10 +13,12 @@ The agent maintains this file but does not self-certify visual correctness.
   and that sandbox pages scan as intro, controls, visual, then readouts.
 - Color contrast: confirm light and dark mode keep active states, token pills, muted labels, and
   review navigation readable against their backgrounds.
-- ScrollScene: confirm each placeholder scene advances while scrolling, and arrow keys move
-  focus between narration steps.
-- Reduced motion: confirm OS/browser reduced-motion mode removes tweened movement without
-  breaking layout.
+- Theme: confirm the header theme toggle switches light/dark mode and preserves readable
+  contrast across landing, part, and review pages.
+- ScrollScene primitive: keep available for future scrollytelling sections; if reused, confirm
+  scrolling advances steps and arrow keys move focus between narration steps.
+- Reduced motion: confirm OS/browser reduced-motion mode removes tweened movement and autoplay
+  without breaking layout.
 - Mobile: confirm the rail moves to the bottom and does not cover essential content.
 
 ## Upcoming Signature Sandboxes
@@ -76,5 +78,7 @@ The agent maintains this file but does not self-certify visual correctness.
   order and the active panel is obvious.
 - ConfigSandbox: inspect `/dev/config`; confirm model, quant, GPU, and context controls update
   fit status, memory totals, and throughput estimate.
+- Lighthouse: automated desktop run on June 27, 2026 passed `/` at Performance 96 /
+  Accessibility 100 and `/parts/1-transformer/` at Performance 92 / Accessibility 100.
 - Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
   review flow clear.

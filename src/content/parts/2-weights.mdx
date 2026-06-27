@@ -28,7 +28,7 @@ the final vocabulary projection are all matrix-heavy. One weight is tiny on its
 own, but billions of them determine both capability and the minimum memory needed
 before a single token can be generated.
 
-<WeightZoom client:load />
+<WeightZoom client:visible />
 
 ## Floating point
 
@@ -39,7 +39,7 @@ uses fewer total bits and has a smaller exponent range. BF16 keeps FP32's
 exponent width but gives up mantissa precision, which is why it can represent very
 large and very small values while being coarser.
 
-<FloatExploder client:load />
+<FloatExploder client:visible />
 
 <DeeperBlock summary="Floating-point detail">
   Normal floating-point values are approximately
@@ -57,7 +57,7 @@ contains more learned structure. GGUF k-quants push this further by mixing
 precision choices across tensors or layers instead of treating every weight the
 same.
 
-<QuantizationSlider client:load />
+<QuantizationSlider client:visible />
 
 <DeeperBlock summary="MXFP4 / NVFP4 block scaling">
   Very low precision formats need a scale. A single per-tensor scale can waste
@@ -76,7 +76,7 @@ included. KV cache is separate: it grows with context length, batch size, layers
 KV heads, and head dimension. That is why long-context serving can run out of
 memory even when the weights fit.
 
-<MemoryBudget client:load />
+<MemoryBudget client:visible />
 
 <aside className="distillation-sidebar">
   <p className="eyebrow">Distillation</p>

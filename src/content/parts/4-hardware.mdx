@@ -29,7 +29,7 @@ L2 and then HBM. HBM is huge compared with SRAM and reaches terabytes per second
 but local SRAM is much faster. Good inference kernels move data into the small
 fast spaces, reuse it, and avoid returning to HBM until they must.
 
-<GpuFloorplan client:load />
+<GpuFloorplan client:visible />
 
 <DeeperBlock summary="Why near memory matters">
   A tensor core can consume operands faster than HBM can repeatedly supply them.
@@ -47,7 +47,7 @@ multiplied, accumulated, and advanced through the matrix. Precision support such
 as FP16, FP8, or FP4 changes how many operands fit and how much bandwidth each
 tile consumes.
 
-<GemmTiling client:load />
+<GemmTiling client:visible />
 
 ## FlashAttention
 
@@ -57,7 +57,7 @@ stream Q/K/V tiles through SRAM, keep online softmax statistics, and avoid writi
 the score matrix to HBM. The result is the same attention operation with far less
 memory traffic, especially as sequence length grows.
 
-<FlashAttention client:load />
+<FlashAttention client:visible />
 
 <DeeperBlock summary="Online softmax">
   A streaming softmax tracks a running maximum and normalization sum as each block
@@ -74,7 +74,7 @@ reuse those weights across more tokens, raising arithmetic intensity toward the
 compute roof. Prefill is naturally more compute-heavy because it processes many
 prompt tokens in parallel.
 
-<Roofline client:load />
+<Roofline client:visible />
 
 ## Parallelism
 
@@ -84,7 +84,7 @@ and tries to keep microbatches flowing without bubbles. Expert parallelism
 distributes MoE experts and routes tokens through all-to-all traffic. Every split
 buys capacity or throughput by spending network bandwidth.
 
-<Parallelism client:load />
+<Parallelism client:visible />
 
 <DeeperBlock summary="Why bandwidth rules throughput">
   A rough decode bound is `tokens_per_second ~= memory_bandwidth / bytes_read_per_token`.
