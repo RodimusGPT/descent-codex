@@ -6,38 +6,89 @@ accent: hardware
 ---
 
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import FlashAttention from "../../components/viz/FlashAttention";
+import GemmTiling from "../../components/viz/GemmTiling";
+import GpuFloorplan from "../../components/viz/GpuFloorplan";
+import Parallelism from "../../components/viz/Parallelism";
+import Roofline from "../../components/viz/Roofline";
 import Token from "../../components/scroll/Token";
 
 # Inference: hardware
 
-The hardware layer connects the software loop to tensor cores, SRAM, and high-bandwidth
-memory. The path of a <Token text="token" /> becomes a path through matrix tiles and
-memory traffic.
+The software loop from Part 3 ultimately becomes tensor math and memory traffic.
+Each <Token text="token" /> step reads weights, moves activations through caches,
+and asks tensor cores to multiply tiled matrices. The hardware question is not
+only "how many FLOPs?" It is whether the bytes arrive fast enough for those FLOPs
+to matter.
 
-<ScrollScene
-  client:load
-  title="Hardware placeholder"
-  steps={[
-    {
-      id: "gpu",
-      narration: "The GPU runs many matrix operations across streaming multiprocessors.",
-      visualLabel: "GPU floorplan placeholder.",
-    },
-    {
-      id: "memory",
-      narration: "The memory hierarchy decides whether work waits on bytes or math.",
-      visualLabel: "Memory pyramid placeholder.",
-    },
-    {
-      id: "roofline",
-      narration: "Roofline analysis ties arithmetic intensity to the bottleneck.",
-      visualLabel: "Roofline arrives in M7.",
-    },
-  ]}
-/>
+## The GPU and memory hierarchy
 
-<DeeperBlock summary="Go deeper">
-  Later milestones will cover GEMM tiling, FlashAttention, rooflines, and model
-  parallelism without making 3D a requirement.
+A GPU is a field of streaming multiprocessors. Each SM has schedulers, registers,
+shared SRAM, and tensor cores that run dense matrix instructions. Farther away is
+L2 and then HBM. HBM is huge compared with SRAM and reaches terabytes per second,
+but local SRAM is much faster. Good inference kernels move data into the small
+fast spaces, reuse it, and avoid returning to HBM until they must.
+
+<GpuFloorplan client:load />
+
+<DeeperBlock summary="Why near memory matters">
+  A tensor core can consume operands faster than HBM can repeatedly supply them.
+  Tiling is the standard answer: load a block once, use it many times near the SM,
+  and write back only the result. The same idea will show up in GEMM and
+  FlashAttention.
+</DeeperBlock>
+
+## GEMM on tensor cores
+
+Most transformer work is matrix multiplication: Q/K/V projections, feed-forward
+layers, MoE experts, and the final vocabulary projection. Hardware runs those
+GEMMs as tiles. A tile of A and a tile of B are staged near the tensor cores,
+multiplied, accumulated, and advanced through the matrix. Precision support such
+as FP16, FP8, or FP4 changes how many operands fit and how much bandwidth each
+tile consumes.
+
+<GemmTiling client:load />
+
+## FlashAttention
+
+Naive attention materializes an `n x n` score matrix in memory, then reads it
+again for softmax and the value multiply. FlashAttention fuses the sequence:
+stream Q/K/V tiles through SRAM, keep online softmax statistics, and avoid writing
+the score matrix to HBM. The result is the same attention operation with far less
+memory traffic, especially as sequence length grows.
+
+<FlashAttention client:load />
+
+<DeeperBlock summary="Online softmax">
+  A streaming softmax tracks a running maximum and normalization sum as each block
+  arrives. That lets the kernel combine score blocks without storing the full
+  matrix, while still producing numerically stable probabilities.
+</DeeperBlock>
+
+## Roofline
+
+Roofline analysis asks how many FLOPs each byte enables. A GPU has a compute roof
+and a memory-bandwidth slope. Decode at batch 1 tends to sit on the bandwidth
+slope because every token reads a large amount of weight data. Larger batches
+reuse those weights across more tokens, raising arithmetic intensity toward the
+compute roof. Prefill is naturally more compute-heavy because it processes many
+prompt tokens in parallel.
+
+<Roofline client:load />
+
+## Parallelism
+
+One GPU is often not enough. Tensor parallelism shards matrices across devices and
+then all-reduces partial results. Pipeline parallelism splits layers into stages
+and tries to keep microbatches flowing without bubbles. Expert parallelism
+distributes MoE experts and routes tokens through all-to-all traffic. Every split
+buys capacity or throughput by spending network bandwidth.
+
+<Parallelism client:load />
+
+<DeeperBlock summary="Why bandwidth rules throughput">
+  A rough decode bound is `tokens_per_second ~= memory_bandwidth / bytes_read_per_token`.
+  This is why weight quantization, KV-cache size, batch reuse, and active-parameter
+  count all show up as speed questions. MoE can be fast because inactive experts
+  are not read for a given token, even though their weights still occupy memory.
 </DeeperBlock>

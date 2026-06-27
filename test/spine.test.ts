@@ -32,9 +32,14 @@ describe("descent spine", () => {
       "/dev/batching",
       "/dev/paged-attention",
       "/dev/speculative",
+      "/dev/gpu-floorplan",
+      "/dev/gemm-tiling",
+      "/dev/flash-attention",
+      "/dev/roofline",
+      "/dev/parallelism",
     ]);
     expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([
-      1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3,
+      1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4,
     ]);
   });
 });

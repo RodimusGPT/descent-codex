@@ -64,3 +64,10 @@
   use deterministic helpers instead of duplicating illustrative calculations inside components.
 - Kept the engine overview as MDX cards rather than a React island. It is comparative reference
   content, while the interactive state belongs to scheduling, cache paging, and speculation.
+
+## M7
+
+- Kept the GPU floorplan two-dimensional. The milestone allows 2D, and the main teaching goal is
+  the memory hierarchy plus tensor-core work path rather than spatially accurate chip layout.
+- Used illustrative hardware presets in `hardware.ts` for roofline behavior. The visual teaches the
+  compute-roof vs bandwidth-slope relationship without tying the copy to one exact GPU SKU.

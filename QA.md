@@ -54,5 +54,17 @@ The agent maintains this file but does not self-certify visual correctness.
   waste, and prefix sharing read as one cache-allocation model.
 - SpeculativeDecoding: inspect `/dev/speculative`; confirm draft size and acceptance rate visibly
   affect accepted tokens and speedup.
+- Part 4: inspect `/parts/4-hardware`; confirm GPU memory hierarchy, GEMM tiling,
+  FlashAttention, roofline, and parallelism read as one hardware narrative.
+- GpuFloorplan: inspect `/dev/gpu-floorplan`; confirm SMs, tensor cores, HBM, L2, and
+  memory hierarchy are visually distinct.
+- GemmTiling: inspect `/dev/gemm-tiling`; confirm tile-size controls change tile count and
+  edge tiles remain visible.
+- FlashAttention: inspect `/dev/flash-attention`; confirm naive vs fused traffic comparison is
+  legible and sequence length changes the HBM readout.
+- Roofline: inspect `/dev/roofline`; confirm dragging batch size moves the point from the
+  bandwidth slope toward the compute roof.
+- Parallelism: inspect `/dev/parallelism`; confirm TP, PP, and EP show different communication
+  patterns clearly.
 - Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
   review flow clear.

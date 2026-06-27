@@ -1726,6 +1726,389 @@ main {
   margin: 0;
 }
 
+.hardware-viz {
+  align-content: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.hardware-viz__header {
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
+}
+
+.hardware-viz__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+
+.hardware-viz__header p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.hardware-controls {
+  align-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.hardware-controls--split {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.hardware-controls button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.hardware-controls button[aria-pressed="true"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.hardware-controls label,
+.hardware-controls--split .viz-controls {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.hardware-controls input {
+  accent-color: var(--color-active);
+  width: 100%;
+}
+
+.hardware-controls button:focus-visible,
+.hardware-controls input:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.hardware-readout {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0;
+}
+
+.hardware-readout div {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.hardware-readout dt {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.hardware-readout dd {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.gpu-floorplan__stage {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(300px, 0.66fr) minmax(220px, 0.34fr);
+}
+
+.gpu-floorplan__chip {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-rows: auto 1fr auto;
+  min-height: 330px;
+  padding: 1rem;
+}
+
+.gpu-floorplan__hbm,
+.gpu-floorplan__l2 {
+  align-items: center;
+  border-radius: 8px;
+  display: grid;
+  font-weight: 900;
+  justify-items: center;
+  min-height: 3rem;
+}
+
+.gpu-floorplan__hbm {
+  background: var(--color-hw-accent);
+  color: var(--color-bg);
+}
+
+.gpu-floorplan__l2 {
+  background: var(--color-active-wash);
+  border: 1px solid var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.gpu-floorplan__sm-grid {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gpu-floorplan__sm-grid span {
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  justify-items: center;
+  min-height: 3.2rem;
+  padding: 0.4rem;
+}
+
+.memory-pyramid {
+  align-content: stretch;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.memory-pyramid__level {
+  align-content: center;
+  background: linear-gradient(
+      90deg,
+      var(--color-active-wash) calc(var(--level-capacity, 0) * 100%),
+      transparent 0
+    ), var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: calc(0.25rem + var(--level-speed, 0) * 0.45rem) solid var(--color-hw-accent);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
+.memory-pyramid__level span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.gemm-tiling__grid {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(var(--gemm-cols), minmax(3rem, 1fr));
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.gemm-tiling__grid span {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  justify-items: center;
+  min-width: 3rem;
+}
+
+.gemm-tiling__grid span.is-active {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.flash-attention__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(280px, 1fr) minmax(180px, 0.28fr);
+  padding: 1rem;
+}
+
+.flash-attention__pipeline {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  overflow-x: auto;
+}
+
+.flash-attention__pipeline span {
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  font-weight: 900;
+  justify-items: center;
+  min-height: 5rem;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.flash-attention__stage--flash .flash-attention__pipeline span {
+  border-color: var(--color-hw-accent);
+}
+
+.flash-attention__traffic {
+  align-content: center;
+  background: linear-gradient(
+      to top,
+      var(--color-active-wash) calc(var(--traffic-share, 0) * 100%),
+      transparent 0
+    ), var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.flash-attention__traffic strong {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+}
+
+.flash-attention__traffic span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.roofline__plot {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: block;
+  height: auto;
+  max-height: 420px;
+  width: 100%;
+}
+
+.roofline__axis,
+.roofline__ridge {
+  stroke: var(--color-border);
+  stroke-width: 2;
+}
+
+.roofline__memory {
+  fill: none;
+  stroke: var(--color-hw-accent);
+  stroke-width: 4;
+}
+
+.roofline__compute {
+  fill: none;
+  stroke: var(--color-active-strong);
+  stroke-width: 4;
+}
+
+.roofline__point {
+  fill: var(--color-active);
+  stroke: var(--color-active-strong);
+  stroke-width: 3;
+}
+
+.roofline__label {
+  fill: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.parallelism__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.parallelism__device {
+  align-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.45rem;
+  min-height: 8rem;
+  min-width: 150px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.parallelism__device span {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.35rem 0.55rem;
+}
+
+.parallelism__stage--tp .parallelism__device,
+.parallelism__stage--ep .parallelism__device {
+  border-color: var(--color-hw-accent);
+}
+
+.parallelism__stage--pp .parallelism__device {
+  border-color: var(--color-active-strong);
+}
+
 .prefill-decode {
   align-content: start;
   background: var(--color-surface);
@@ -1992,6 +2375,7 @@ main {
   .float-exploder__header,
   .quantization-slider__header,
   .serving-viz__header,
+  .hardware-viz__header,
   .prefill-decode__header,
   .review-layout,
   .review-overview,
@@ -2002,6 +2386,8 @@ main {
   .weight-zoom__stage,
   .paged-attention__stage,
   .speculative-lane,
+  .gpu-floorplan__stage,
+  .flash-attention__stage,
   .prefill-settings {
     grid-template-columns: 1fr;
   }

@@ -2,13 +2,18 @@
 import AttentionFan from "../../components/viz/AttentionFan";
 import BatchingTimeline from "../../components/viz/BatchingTimeline";
 import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
+import FlashAttention from "../../components/viz/FlashAttention";
 import FloatExploder from "../../components/viz/FloatExploder";
+import GemmTiling from "../../components/viz/GemmTiling";
+import GpuFloorplan from "../../components/viz/GpuFloorplan";
 import MemoryBudget from "../../components/viz/MemoryBudget";
 import MoERouter from "../../components/viz/MoERouter";
 import PagedAttention from "../../components/viz/PagedAttention";
+import Parallelism from "../../components/viz/Parallelism";
 import PrefillDecode from "../../components/viz/PrefillDecode";
 import QKVMultiHead from "../../components/viz/QKVMultiHead";
 import QuantizationSlider from "../../components/viz/QuantizationSlider";
+import Roofline from "../../components/viz/Roofline";
 import SamplingPlayground from "../../components/viz/SamplingPlayground";
 import SpeculativeDecoding from "../../components/viz/SpeculativeDecoding";
 import Tokenizer from "../../components/viz/Tokenizer";
@@ -72,6 +77,11 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "batching" ? <BatchingTimeline client:load /> : null}
         {component === "paged-attention" ? <PagedAttention client:load /> : null}
         {component === "speculative" ? <SpeculativeDecoding client:load /> : null}
+        {component === "gpu-floorplan" ? <GpuFloorplan client:load /> : null}
+        {component === "gemm-tiling" ? <GemmTiling client:load /> : null}
+        {component === "flash-attention" ? <FlashAttention client:load /> : null}
+        {component === "roofline" ? <Roofline client:load /> : null}
+        {component === "parallelism" ? <Parallelism client:load /> : null}
       </section>
     </div>
   </main>

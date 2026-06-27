@@ -17,7 +17,12 @@ export type Sandbox = {
     | "prefill"
     | "batching"
     | "paged-attention"
-    | "speculative";
+    | "speculative"
+    | "gpu-floorplan"
+    | "gemm-tiling"
+    | "flash-attention"
+    | "roofline"
+    | "parallelism";
   title: string;
 };
 
@@ -126,5 +131,40 @@ export const SANDBOXES = [
     path: "/dev/speculative",
     slug: "speculative",
     title: "Speculative decoding",
+  },
+  {
+    label: "GPU floorplan",
+    part: 4,
+    path: "/dev/gpu-floorplan",
+    slug: "gpu-floorplan",
+    title: "GPU floorplan",
+  },
+  {
+    label: "GEMM tiling",
+    part: 4,
+    path: "/dev/gemm-tiling",
+    slug: "gemm-tiling",
+    title: "GEMM tiling",
+  },
+  {
+    label: "FlashAttention",
+    part: 4,
+    path: "/dev/flash-attention",
+    slug: "flash-attention",
+    title: "FlashAttention",
+  },
+  {
+    label: "Roofline",
+    part: 4,
+    path: "/dev/roofline",
+    slug: "roofline",
+    title: "Roofline",
+  },
+  {
+    label: "Parallelism",
+    part: 4,
+    path: "/dev/parallelism",
+    slug: "parallelism",
+    title: "Parallelism",
   },
 ] as const satisfies readonly Sandbox[];
