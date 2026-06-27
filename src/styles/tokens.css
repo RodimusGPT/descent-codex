@@ -14,6 +14,9 @@
   --color-text: #0f172a;
   --color-text-muted: #475569;
   --color-token-bg: #eef2ff;
+  --color-token-text: #312e81;
+  --color-on-active: #0f172a;
+  --color-on-active-wash: #0f172a;
   --shadow-soft: 0 20px 60px rgb(15 23 42 / 10%);
   --shadow-token: 0 0.3rem 0.8rem rgb(15 23 42 / 14%);
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -24,13 +27,22 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
+  --color-active: #fbbf24;
+  --color-active-strong: #fb923c;
+  --color-active-wash: #3b2a12;
   --color-bg: #10131a;
   --color-border: #334155;
+  --color-cache: #34d399;
+  --color-hw-accent: #5eead4;
   --color-inert-soft: #1f2937;
+  --color-model-accent: #c4b5fd;
   --color-surface: #171c24;
   --color-text: #f8fafc;
   --color-text-muted: #cbd5e1;
-  --color-token-bg: #312e81;
+  --color-token-bg: #1e1b4b;
+  --color-token-text: #e0e7ff;
+  --color-on-active: #0f172a;
+  --color-on-active-wash: #f8fafc;
   --shadow-soft: 0 20px 60px rgb(0 0 0 / 30%);
   --shadow-token: 0 0.3rem 0.8rem rgb(0 0 0 / 24%);
 }

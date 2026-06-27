@@ -1,4 +1,4 @@
-export const COLOR = {
+export const LIGHT_COLOR = {
   active: "#f5a524",
   activeStrong: "#ef5d3d",
   activeWash: "#fff2d2",
@@ -13,7 +13,32 @@ export const COLOR = {
   text: "#0f172a",
   textMuted: "#475569",
   tokenBg: "#eef2ff",
+  tokenText: "#312e81",
+  onActive: "#0f172a",
+  onActiveWash: "#0f172a",
 } as const;
+
+export const DARK_COLOR = {
+  ...LIGHT_COLOR,
+  active: "#fbbf24",
+  activeStrong: "#fb923c",
+  activeWash: "#3b2a12",
+  bg: "#10131a",
+  border: "#334155",
+  cache: "#34d399",
+  hwAccent: "#5eead4",
+  inertSoft: "#1f2937",
+  modelAccent: "#c4b5fd",
+  surface: "#171c24",
+  text: "#f8fafc",
+  textMuted: "#cbd5e1",
+  tokenBg: "#1e1b4b",
+  tokenText: "#e0e7ff",
+  onActive: "#0f172a",
+  onActiveWash: "#f8fafc",
+} as const;
+
+export const COLOR = LIGHT_COLOR;
 
 export const TYPE_SCALE = {
   body: "1rem",

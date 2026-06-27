@@ -55,7 +55,7 @@ main {
 .skip-link {
   background: var(--color-active);
   border-radius: 0 0 8px 0;
-  color: var(--color-text);
+  color: var(--color-on-active);
   font-weight: 900;
   left: 0;
   padding: 0.6rem 0.8rem;
@@ -96,6 +96,7 @@ main {
   background: var(--color-active);
   border: 1px solid var(--color-active-strong);
   border-radius: 8px;
+  color: var(--color-on-active);
   display: grid;
   font-family: var(--font-mono);
   height: 2rem;
@@ -303,6 +304,7 @@ main {
 .part-map a[aria-current="page"] {
   background: var(--color-active-wash);
   border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
 }
 
 .part-map span,
@@ -529,6 +531,7 @@ main {
 .review-sidebar a[aria-current="page"] {
   background: var(--color-active-wash);
   border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
 }
 
 .review-workspace {
@@ -625,6 +628,7 @@ main {
 .attention-fan__heads button[aria-pressed="true"] {
   background: var(--color-active-wash);
   border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
 }
 
 .attention-fan__stage {
@@ -746,6 +750,7 @@ main {
 .quantization-slider__model button[aria-pressed="true"] {
   background: var(--color-active-wash);
   border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
 }
 
 .viz-controls button:focus-visible,
@@ -791,6 +796,7 @@ main {
 
 .float-bit[aria-pressed="true"] {
   background: var(--color-active-wash);
+  color: var(--color-on-active-wash);
 }
 
 .float-fields {
@@ -988,7 +994,7 @@ main {
 .phase-strip__item.is-active {
   background: var(--color-active-wash);
   border-color: var(--color-active-strong);
-  color: var(--color-text);
+  color: var(--color-on-active-wash);
 }
 
 .token-flow {
@@ -1128,6 +1134,7 @@ main {
 .progress-rail a[aria-current="page"] {
   background: var(--color-active);
   border-color: var(--color-active-strong);
+  color: var(--color-on-active);
 }
 
 .progress-rail__label {

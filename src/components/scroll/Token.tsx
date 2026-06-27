@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import { COLOR } from "../../lib/encoding";
 
 type TokenProps = {
   className?: string;
@@ -11,9 +10,9 @@ type TokenProps = {
 
 const Token = ({ className, compact = false, highlight = false, id, text }: TokenProps) => {
   const style = {
-    "--token-bg": highlight ? COLOR.activeWash : COLOR.tokenBg,
-    "--token-border": highlight ? COLOR.activeStrong : COLOR.border,
-    "--token-color": COLOR.text,
+    "--token-bg": highlight ? "var(--color-active-wash)" : "var(--color-token-bg)",
+    "--token-border": highlight ? "var(--color-active-strong)" : "var(--color-border)",
+    "--token-color": highlight ? "var(--color-on-active-wash)" : "var(--color-token-text)",
     "--token-size": compact ? "0.78rem" : "0.9rem",
   } as CSSProperties;
 
