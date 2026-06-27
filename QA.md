@@ -93,3 +93,6 @@ The agent maintains this file but does not self-certify visual correctness.
 - Automated checks on June 27, 2026: `bun run check` passed, `bun run build` passed, and route
   smokes returned 200 for `/parts/0-hook/` through `/parts/5-synthesis/` plus the changed `/dev`
   sandboxes.
+- Playwright visual pass on June 27, 2026: captured desktop/mobile screenshots for
+  `/parts/1-transformer/` and `/parts/5-synthesis/`. The pass found the Part 5 recap table was
+  clipped on mobile; it now stacks into labeled rows at the mobile breakpoint.

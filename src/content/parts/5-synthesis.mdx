@@ -69,39 +69,45 @@ deployment decision.
     </thead>
     <tbody>
       <tr>
-        <td>Prompt and tokenizer</td>
-        <td>Yes</td>
-        <td>They define the exact context IDs the model sees.</td>
+        <td data-label="Choice">Prompt and tokenizer</td>
+        <td data-label="Can change output?">Yes</td>
+        <td data-label="Primary reason to care">They define the exact context IDs the model sees.</td>
       </tr>
       <tr>
-        <td>Weights and architecture</td>
-        <td>Yes</td>
-        <td>They define the learned function from context to logits.</td>
+        <td data-label="Choice">Weights and architecture</td>
+        <td data-label="Can change output?">Yes</td>
+        <td data-label="Primary reason to care">They define the learned function from context to logits.</td>
       </tr>
       <tr>
-        <td>Quantization</td>
-        <td>Sometimes</td>
-        <td>It saves memory and bandwidth but approximates the original weights.</td>
+        <td data-label="Choice">Quantization</td>
+        <td data-label="Can change output?">Sometimes</td>
+        <td data-label="Primary reason to care">
+          It saves memory and bandwidth but approximates the original weights.
+        </td>
       </tr>
       <tr>
-        <td>Sampling settings</td>
-        <td>Yes</td>
-        <td>They reshape or filter the next-token distribution.</td>
+        <td data-label="Choice">Sampling settings</td>
+        <td data-label="Can change output?">Yes</td>
+        <td data-label="Primary reason to care">They reshape or filter the next-token distribution.</td>
       </tr>
       <tr>
-        <td>Batching, paging, prefix caching</td>
-        <td>No, if implemented exactly</td>
-        <td>They improve throughput, latency, and memory use.</td>
+        <td data-label="Choice">Batching, paging, prefix caching</td>
+        <td data-label="Can change output?">No, if implemented exactly</td>
+        <td data-label="Primary reason to care">They improve throughput, latency, and memory use.</td>
       </tr>
       <tr>
-        <td>Speculative decoding</td>
-        <td>No, for exact verification</td>
-        <td>It spends draft-model work to reduce target-model decode latency.</td>
+        <td data-label="Choice">Speculative decoding</td>
+        <td data-label="Can change output?">No, for exact verification</td>
+        <td data-label="Primary reason to care">
+          It spends draft-model work to reduce target-model decode latency.
+        </td>
       </tr>
       <tr>
-        <td>Hardware and parallelism</td>
-        <td>No, in normal deterministic math bounds</td>
-        <td>They decide whether the model fits and how quickly tokens arrive.</td>
+        <td data-label="Choice">Hardware and parallelism</td>
+        <td data-label="Can change output?">No, in normal deterministic math bounds</td>
+        <td data-label="Primary reason to care">
+          They decide whether the model fits and how quickly tokens arrive.
+        </td>
       </tr>
     </tbody>
   </table>
