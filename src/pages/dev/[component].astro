@@ -47,23 +47,6 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
     </header>
 
     <div class="review-layout">
-      <aside class="review-sidebar" aria-label="Checkpoint sandboxes">
-        <p class="review-sidebar__label">Interactive sandboxes</p>
-        <nav>
-          {
-            SANDBOXES.map((sandbox) => (
-              <a
-                aria-current={sandbox.slug === activeSandbox.slug ? "page" : undefined}
-                href={sandbox.path}
-              >
-                <span>Part {sandbox.part}</span>
-                <strong>{sandbox.label}</strong>
-              </a>
-            ))
-          }
-        </nav>
-      </aside>
-
       <section class="review-workspace" aria-label={`${activeSandbox.label} sandbox`}>
         {component === "prompt-token" ? <PromptToken client:load /> : null}
         {component === "tokenizer" ? <Tokenizer client:load /> : null}
@@ -89,6 +72,23 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "full-stack" ? <FullStackReplay client:load /> : null}
         {component === "config" ? <ConfigSandbox client:load /> : null}
       </section>
+
+      <aside class="review-sidebar" aria-label="Interactive sandbox navigation">
+        <p class="review-sidebar__label">Interactive sandboxes</p>
+        <nav>
+          {
+            SANDBOXES.map((sandbox) => (
+              <a
+                aria-current={sandbox.slug === activeSandbox.slug ? "page" : undefined}
+                href={sandbox.path}
+              >
+                <span>Part {sandbox.part}</span>
+                <strong>{sandbox.label}</strong>
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
     </div>
   </main>
 </BaseLayout>
