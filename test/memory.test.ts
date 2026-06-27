@@ -4,6 +4,7 @@ import {
   formatBytes,
   gqaSavingsRatio,
   kvCacheBytes,
+  memoryBudgetBreakdown,
   prefillDecodeWork,
   weightMemoryBytes,
 } from "../src/lib/memory";
@@ -34,6 +35,20 @@ describe("memory formulas", () => {
   it("formats byte readouts for the UI", () => {
     expect(formatBytes(1024 ** 2)).toBe("1.00 MiB");
     expect(formatBytes(2 * 1024 ** 3)).toBe("2.00 GiB");
+  });
+
+  it("breaks memory budget into weights, KV cache, overhead, and total", () => {
+    const budget = memoryBudgetBreakdown({
+      kvBytes: 1_000_000_000,
+      overheadRatio: 0.1,
+      paramsBillions: 7,
+      weightBytesPerParam: 0.5,
+    });
+
+    expect(budget.weightBytes).toBe(3_500_000_000);
+    expect(budget.kvBytes).toBe(1_000_000_000);
+    expect(budget.overheadBytes).toBe(450_000_000);
+    expect(budget.totalBytes).toBe(4_950_000_000);
   });
 });
 

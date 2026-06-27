@@ -21,6 +21,20 @@ export type WorkEstimate = {
   totalWork: number;
 };
 
+export type MemoryBudgetInput = {
+  overheadRatio?: number;
+  paramsBillions: number;
+  weightBytesPerParam: number;
+  kvBytes: number;
+};
+
+export type MemoryBudgetBreakdown = {
+  kvBytes: number;
+  overheadBytes: number;
+  totalBytes: number;
+  weightBytes: number;
+};
+
 export const MEMORY_PRESETS = [
   {
     headDim: 128,
@@ -53,6 +67,23 @@ export const kvCacheBytes = ({ bytesPerValue, headDim, nKvHeads, nLayers, seqLen
 
 export const weightMemoryBytes = (paramsBillions: number, bytesPerParam: number) =>
   paramsBillions * 1_000_000_000 * bytesPerParam;
+
+export const memoryBudgetBreakdown = ({
+  overheadRatio = 0.08,
+  paramsBillions,
+  weightBytesPerParam,
+  kvBytes,
+}: MemoryBudgetInput): MemoryBudgetBreakdown => {
+  const weightBytes = weightMemoryBytes(paramsBillions, weightBytesPerParam);
+  const overheadBytes = (weightBytes + kvBytes) * overheadRatio;
+
+  return {
+    kvBytes,
+    overheadBytes,
+    totalBytes: weightBytes + kvBytes + overheadBytes,
+    weightBytes,
+  };
+};
 
 export const decodeWorkUnits = (
   contextLength: number,

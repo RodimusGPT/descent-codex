@@ -2,6 +2,7 @@
 import AttentionFan from "../../components/viz/AttentionFan";
 import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
 import FloatExploder from "../../components/viz/FloatExploder";
+import MemoryBudget from "../../components/viz/MemoryBudget";
 import MoERouter from "../../components/viz/MoERouter";
 import PrefillDecode from "../../components/viz/PrefillDecode";
 import QKVMultiHead from "../../components/viz/QKVMultiHead";
@@ -9,6 +10,7 @@ import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import SamplingPlayground from "../../components/viz/SamplingPlayground";
 import Tokenizer from "../../components/viz/Tokenizer";
 import TransformerStack from "../../components/viz/TransformerStack";
+import WeightZoom from "../../components/viz/WeightZoom";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SANDBOXES } from "../../lib/sandboxes";
 
@@ -59,8 +61,10 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "qkv" ? <QKVMultiHead client:load /> : null}
         {component === "moe" ? <MoERouter client:load /> : null}
         {component === "sampling" ? <SamplingPlayground client:load /> : null}
+        {component === "weight-zoom" ? <WeightZoom client:load /> : null}
         {component === "float" ? <FloatExploder client:load /> : null}
         {component === "quant" ? <QuantizationSlider client:load /> : null}
+        {component === "memory-budget" ? <MemoryBudget client:load /> : null}
         {component === "prefill" ? <PrefillDecode client:load /> : null}
       </section>
     </div>

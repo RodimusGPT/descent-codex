@@ -6,38 +6,85 @@ accent: numbers
 ---
 
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import FloatExploder from "../../components/viz/FloatExploder";
+import MemoryBudget from "../../components/viz/MemoryBudget";
+import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import Token from "../../components/scroll/Token";
+import WeightZoom from "../../components/viz/WeightZoom";
 
 # Weights as numbers
 
-The second layer zooms from a model down to the numerical weights that make matrix
-multiplication possible. The same <Token text="token" /> is now carried by billions
-of floating-point or quantized parameters.
+In Part 1, the model looked like layers moving information between tokens. Zoom
+in one level and those layers are mostly matrices full of learned numbers. Running
+the model means moving the current <Token text="token" /> representation through
+those matrices again and again. The exact way those numbers are stored controls
+memory use, model fit, and how much data has to move during inference.
 
-<ScrollScene
-  client:load
-  title="Weights placeholder"
-  steps={[
-    {
-      id: "matrix",
-      narration: "A model is mostly matrices of learned numbers.",
-      visualLabel: "Model to layer to matrix.",
-    },
-    {
-      id: "float",
-      narration: "Floating point splits each number into sign, exponent, and mantissa fields.",
-      visualLabel: "The float exploder arrives in M2.",
-    },
-    {
-      id: "quant",
-      narration: "Quantization stores approximate values in fewer bits.",
-      visualLabel: "The quantization slider arrives in M2.",
-    },
-  ]}
-/>
+## From model to one weight
 
-<DeeperBlock summary="Go deeper">
-  The M2 sandbox will expose FP32, FP16, BF16, INT8, Q4, and Q2 behavior with tested
-  math behind the visual readouts.
+A model checkpoint is not a pile of prose or rules. It is billions of scalar
+weights arranged into tensors. Attention projections, feed-forward layers, and
+the final vocabulary projection are all matrix-heavy. One weight is tiny on its
+own, but billions of them determine both capability and the minimum memory needed
+before a single token can be generated.
+
+<WeightZoom client:load />
+
+## Floating point
+
+Floating point stores a number as sign, exponent, and mantissa. The sign says
+positive or negative. The exponent sets the scale. The mantissa stores precision
+within that scale. FP32 uses many mantissa bits and a broad exponent range. FP16
+uses fewer total bits and has a smaller exponent range. BF16 keeps FP32's
+exponent width but gives up mantissa precision, which is why it can represent very
+large and very small values while being coarser.
+
+<FloatExploder client:load />
+
+<DeeperBlock summary="Floating-point detail">
+  Normal floating-point values are approximately
+  `(-1)^sign * 2^(exponent - bias) * (1 + mantissa)`. Subnormal values handle the
+  tiny range near zero by dropping the implicit leading 1.
 </DeeperBlock>
+
+## Quantization
+
+Quantization stores weights in fewer bits by mapping many nearby real values to a
+smaller set of buckets. INT8, Q4, and Q2 reduce memory and bandwidth at the cost
+of approximation error. In practice, a bigger model at lower precision often
+beats a much smaller model at higher precision, because the larger model still
+contains more learned structure. GGUF k-quants push this further by mixing
+precision choices across tensors or layers instead of treating every weight the
+same.
+
+<QuantizationSlider client:load />
+
+<DeeperBlock summary="MXFP4 / NVFP4 block scaling">
+  Very low precision formats need a scale. A single per-tensor scale can waste
+  buckets when one block has outliers. MXFP4/NVFP4-style block scaling stores a
+  shared scale for a small block, commonly 32 values, so each local block uses its
+  few bits more effectively. The tradeoff is extra scale metadata and more decode
+  work around the matrix multiply.
+</DeeperBlock>
+
+## Memory math
+
+The first budget is simple: `params * bytes per parameter`. A 7B model in FP16 is
+about 14 GB before runtime overhead. Q4 cuts that to roughly 3.5 GB, which matches
+the rough rule of thumb `size_B * 0.6 ~= Q4 GB` once metadata and packaging are
+included. KV cache is separate: it grows with context length, batch size, layers,
+KV heads, and head dimension. That is why long-context serving can run out of
+memory even when the weights fit.
+
+<MemoryBudget client:load />
+
+<aside className="distillation-sidebar">
+  <p className="eyebrow">Distillation</p>
+  <h2>The other way to get small</h2>
+  <p>
+    Quantization compresses a trained model. Distillation trains a smaller student
+    to imitate a stronger teacher's outputs, sometimes including reasoning traces.
+    It transfers behavior rather than just changing storage format, so even a
+    modest number of high-quality examples can move a small model's capability.
+  </p>
+</aside>

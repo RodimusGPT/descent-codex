@@ -34,10 +34,15 @@ The agent maintains this file but does not self-certify visual correctness.
 - MoERouter: inspect `/dev/moe`; confirm top-k routing makes active vs idle experts clear.
 - SamplingPlayground: inspect `/dev/sampling`; confirm temperature/top-k/top-p controls and the
   autoregressive loop are understandable.
+- Part 2: inspect `/parts/2-weights`; confirm weight zoom, float formats, quantization, memory
+  math, MXFP4/NVFP4 detail, and distillation read as one number-representation narrative.
+- WeightZoom: inspect `/dev/weight-zoom`; confirm model-to-weight scale is clear.
 - FloatExploder: inspect `/dev/float`; confirm bit boundaries match FP32, FP16, and BF16,
   toggling bits feels direct, and the BF16-vs-FP16 exponent/mantissa tradeoff is clear.
 - QuantizationSlider: inspect `/dev/quant`; confirm the histogram visibly stair-steps as
   precision drops, and the size/quality readouts feel believable and clearly illustrative.
+- MemoryBudget: inspect `/dev/memory-budget`; confirm weights vs KV cache vs overhead are legible
+  and context length visibly affects the budget.
 - PrefillDecode: inspect `/dev/prefill`; confirm the parallel-vs-loop distinction is obvious,
   the no-cache toggle reads as wasteful recompute, the KV grid fills cell-by-cell, and
   reduced-motion mode still teaches through stepped states.

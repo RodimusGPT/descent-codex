@@ -50,3 +50,10 @@
   `transformer.ts`. They are intentionally simpler than the four signature sandboxes.
 - Folded the autoregression animation into `SamplingPlayground` instead of adding another
   top-level project-structure component.
+
+## M5
+
+- Added a `WeightZoom` component for the model-to-one-weight transition even though it is not in
+  the locked project tree. The milestone explicitly requires this visual.
+- Reused the existing KV-cache formula for `MemoryBudget`, with a small tested breakdown helper
+  for weights, KV cache, overhead, and total.

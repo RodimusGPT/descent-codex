@@ -24,10 +24,12 @@ describe("descent spine", () => {
       "/dev/qkv",
       "/dev/moe",
       "/dev/sampling",
+      "/dev/weight-zoom",
       "/dev/float",
       "/dev/quant",
+      "/dev/memory-budget",
       "/dev/prefill",
     ]);
-    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([1, 1, 1, 1, 1, 1, 1, 2, 2, 3]);
+    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3]);
   });
 });

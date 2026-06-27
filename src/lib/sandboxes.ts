@@ -10,8 +10,10 @@ export type Sandbox = {
     | "qkv"
     | "moe"
     | "sampling"
+    | "weight-zoom"
     | "float"
     | "quant"
+    | "memory-budget"
     | "prefill";
   title: string;
 };
@@ -67,6 +69,13 @@ export const SANDBOXES = [
     title: "Sampling",
   },
   {
+    label: "Weight zoom",
+    part: 2,
+    path: "/dev/weight-zoom",
+    slug: "weight-zoom",
+    title: "Weight zoom",
+  },
+  {
     label: "Float exploder",
     part: 2,
     path: "/dev/float",
@@ -79,6 +88,13 @@ export const SANDBOXES = [
     path: "/dev/quant",
     slug: "quant",
     title: "Quantization",
+  },
+  {
+    label: "Memory budget",
+    part: 2,
+    path: "/dev/memory-budget",
+    slug: "memory-budget",
+    title: "Memory budget",
   },
   {
     label: "Prefill / decode",
