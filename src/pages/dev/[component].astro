@@ -1,12 +1,23 @@
 ---
+import AttentionFan from "../../components/viz/AttentionFan";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
 export function getStaticPaths() {
-  return [];
+  return [
+    {
+      params: { component: "attention" },
+      props: { component: "attention" },
+    },
+  ];
 }
 
 const { component } = Astro.props;
 ---
 
-<main>
-  <h1>{component}</h1>
-  <p>Sandbox registry is empty until the signature interactives land.</p>
-</main>
+<BaseLayout title={`Dev: ${component}`}>
+  <main class="site-shell dev-sandbox">
+    <p class="eyebrow">Sandbox</p>
+    <h1>{component}</h1>
+    {component === "attention" ? <AttentionFan client:load /> : null}
+  </main>
+</BaseLayout>

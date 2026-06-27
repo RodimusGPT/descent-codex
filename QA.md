@@ -15,7 +15,9 @@ The agent maintains this file but does not self-certify visual correctness.
 
 ## Upcoming Signature Sandboxes
 
-- AttentionFan: pending M1.
+- AttentionFan: inspect `/dev/attention`; confirm the three heads show distinct patterns,
+  high-weight lines read warmer/thicker, click and arrow-key query changes feel coherent,
+  and reduced-motion mode removes tweening without losing the fan relationship.
 - FloatExploder: pending M2.
 - QuantizationSlider: pending M2.
 - PrefillDecode: pending M3.

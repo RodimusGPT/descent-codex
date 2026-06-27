@@ -11,3 +11,9 @@
   sandbox components.
 - Set a repository-local Git author identity (`Codex <codex@example.local>`) because the
   workspace had no commit identity configured.
+
+## M1
+
+- Used deterministic mock attention heads rather than model-derived weights. The goal for M1
+  is legible, distinct behavior in the standalone fan; later prose can swap in richer data
+  without changing the component contract.
