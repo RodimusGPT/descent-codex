@@ -57,3 +57,10 @@
   the locked project tree. The milestone explicitly requires this visual.
 - Reused the existing KV-cache formula for `MemoryBudget`, with a small tested breakdown helper
   for weights, KV cache, overhead, and total.
+
+## M6
+
+- Put serving-specific math in `serving.ts` so batching, paging, and speculative decoding visuals
+  use deterministic helpers instead of duplicating illustrative calculations inside components.
+- Kept the engine overview as MDX cards rather than a React island. It is comparative reference
+  content, while the interactive state belongs to scheduling, cache paging, and speculation.

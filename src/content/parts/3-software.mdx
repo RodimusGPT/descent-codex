@@ -5,39 +5,115 @@ question: How is it served?
 accent: software
 ---
 
+import BatchingTimeline from "../../components/viz/BatchingTimeline";
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import PagedAttention from "../../components/viz/PagedAttention";
+import PrefillDecode from "../../components/viz/PrefillDecode";
+import SpeculativeDecoding from "../../components/viz/SpeculativeDecoding";
 import Token from "../../components/scroll/Token";
 
 # Inference: software
 
-The software layer explains why the first response token and later response tokens
-feel different. A prompt is processed in a prefill pass, then each <Token text="token" />
-is decoded one step at a time.
+The model from Part 1 and the weights from Part 2 still need a serving loop. The
+software layer turns one request into scheduled GPU work, keeps each request's KV
+cache organized, and tries to hide latency without changing which
+<Token text="token" /> distribution the model would have produced.
 
-<ScrollScene
-  client:load
-  title="Software placeholder"
-  steps={[
-    {
-      id: "prefill",
-      narration: "Prefill processes the whole prompt in parallel and builds the initial cache.",
-      visualLabel: "Prefill is compute-bound.",
-    },
-    {
-      id: "decode",
-      narration: "Decode emits one token per loop and reuses cached keys and values.",
-      visualLabel: "Decode is memory-bound.",
-    },
-    {
-      id: "serving",
-      narration: "Serving engines batch, page, cache, and schedule many requests around that loop.",
-      visualLabel: "The KV cache interactive arrives in M3.",
-    },
-  ]}
-/>
+## Prefill, decode, and KV cache
 
-<DeeperBlock summary="Go deeper">
-  M3 will introduce a standalone prefill/decode sandbox with a filling KV-cache grid
-  and tested memory formulas.
+Inference has two very different phases. Prefill processes the whole prompt in
+parallel and writes keys and values into the cache. Decode then runs one loop per
+new token: read the cache, compute the next logits, sample a token, append that
+token, and extend the cache. This is why time to first token often feels
+different from later token cadence.
+
+<PrefillDecode client:load />
+
+<DeeperBlock summary="KV-cache shape">
+  A simple KV-cache estimate is
+  `2 * layers * kv_heads * head_dim * sequence_length * bytes_per_value`. GQA and
+  MQA shrink the `kv_heads` term by sharing keys and values across query heads.
+  MLA-style designs compress the stored key/value information into a latent form,
+  moving part of the memory problem back into projection math.
+</DeeperBlock>
+
+## Batching and scheduling
+
+A serving engine rarely runs one conversation in isolation. It batches many decode
+steps together so the hardware sees enough work. Static batching waits for a
+group, runs that group, then admits the next group. Continuous batching keeps the
+loop open: finished requests leave, new requests join, and long prompts can be
+chunked so prefill work does not block every decode step behind it.
+
+<BatchingTimeline client:load />
+
+<DeeperBlock summary="Prefix caching and chunked prefill">
+  Prefix caching lets multiple requests reuse the same already-prefilled prompt
+  prefix, which is common for system prompts and retrieval templates. Chunked
+  prefill splits a long prompt into smaller pieces so the engine can interleave
+  prompt processing with latency-sensitive decode work.
+</DeeperBlock>
+
+## PagedAttention
+
+The KV cache grows unevenly because every request has a different prompt length
+and output length. PagedAttention treats the cache more like virtual memory: each
+sequence has logical blocks, and a block table points those logical blocks at
+physical pages. That reduces large contiguous allocation pressure, makes tail
+fragmentation visible, and allows shared prefixes to point at the same blocks.
+
+<PagedAttention client:load />
+
+## Serving engines
+
+Different engines make different tradeoffs around portability, kernels,
+scheduling policy, and deployment target.
+
+<section className="engine-overview" aria-label="Serving engine overview">
+  <article>
+    <h3>llama.cpp</h3>
+    <p>
+      Broad local inference support, GGUF weights, CPU-first portability, and GPU
+      backends for practical desktop or edge use.
+    </p>
+  </article>
+  <article>
+    <h3>vLLM</h3>
+    <p>
+      Production-oriented serving with PagedAttention, continuous batching, OpenAI-compatible
+      APIs, and high-throughput multi-request scheduling.
+    </p>
+  </article>
+  <article>
+    <h3>SGLang</h3>
+    <p>
+      Structured generation and agentic serving workflows with radix-style prefix
+      reuse and scheduler controls for complex request programs.
+    </p>
+  </article>
+  <article>
+    <h3>TensorRT-LLM</h3>
+    <p>
+      NVIDIA-optimized inference with fused kernels, quantization support, and
+      deployment paths tuned for GPU clusters.
+    </p>
+  </article>
+</section>
+
+## Speculative decoding
+
+Decode is serial, but it can still be accelerated. Speculative decoding runs a
+smaller draft model ahead for several candidate tokens, then asks the target
+model to verify those candidates in one pass. Accepted candidates are kept. At
+the first mismatch, the target model supplies the correction and the loop
+continues from there.
+
+<SpeculativeDecoding client:load />
+
+<DeeperBlock summary="Why speculation preserves the target model">
+  The verifier does not blindly trust the draft. It checks the proposed token
+  probabilities against the target model and only keeps the prefix that is valid
+  under the target distribution. The draft model changes latency, not the model
+  being sampled. Related approaches include Medusa-style extra heads, EAGLE-style
+  feature prediction, and multi-token prediction heads trained into the model.
 </DeeperBlock>

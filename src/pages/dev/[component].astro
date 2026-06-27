@@ -1,13 +1,16 @@
 ---
 import AttentionFan from "../../components/viz/AttentionFan";
+import BatchingTimeline from "../../components/viz/BatchingTimeline";
 import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
 import FloatExploder from "../../components/viz/FloatExploder";
 import MemoryBudget from "../../components/viz/MemoryBudget";
 import MoERouter from "../../components/viz/MoERouter";
+import PagedAttention from "../../components/viz/PagedAttention";
 import PrefillDecode from "../../components/viz/PrefillDecode";
 import QKVMultiHead from "../../components/viz/QKVMultiHead";
 import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import SamplingPlayground from "../../components/viz/SamplingPlayground";
+import SpeculativeDecoding from "../../components/viz/SpeculativeDecoding";
 import Tokenizer from "../../components/viz/Tokenizer";
 import TransformerStack from "../../components/viz/TransformerStack";
 import WeightZoom from "../../components/viz/WeightZoom";
@@ -29,7 +32,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
   <main class="site-shell review-shell" id="main-content">
     <header class="review-hero">
       <div>
-        <p class="eyebrow">M0-M3 checkpoint</p>
+        <p class="eyebrow">Interactive review</p>
         <h1>{activeSandbox.label}</h1>
       </div>
       <a href="/dev/">All sandboxes</a>
@@ -66,6 +69,9 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "quant" ? <QuantizationSlider client:load /> : null}
         {component === "memory-budget" ? <MemoryBudget client:load /> : null}
         {component === "prefill" ? <PrefillDecode client:load /> : null}
+        {component === "batching" ? <BatchingTimeline client:load /> : null}
+        {component === "paged-attention" ? <PagedAttention client:load /> : null}
+        {component === "speculative" ? <SpeculativeDecoding client:load /> : null}
       </section>
     </div>
   </main>

@@ -14,7 +14,10 @@ export type Sandbox = {
     | "float"
     | "quant"
     | "memory-budget"
-    | "prefill";
+    | "prefill"
+    | "batching"
+    | "paged-attention"
+    | "speculative";
   title: string;
 };
 
@@ -102,5 +105,26 @@ export const SANDBOXES = [
     path: "/dev/prefill",
     slug: "prefill",
     title: "Prefill",
+  },
+  {
+    label: "Batching timeline",
+    part: 3,
+    path: "/dev/batching",
+    slug: "batching",
+    title: "Batching",
+  },
+  {
+    label: "PagedAttention",
+    part: 3,
+    path: "/dev/paged-attention",
+    slug: "paged-attention",
+    title: "PagedAttention",
+  },
+  {
+    label: "Speculative decoding",
+    part: 3,
+    path: "/dev/speculative",
+    slug: "speculative",
+    title: "Speculative decoding",
   },
 ] as const satisfies readonly Sandbox[];

@@ -29,7 +29,12 @@ describe("descent spine", () => {
       "/dev/quant",
       "/dev/memory-budget",
       "/dev/prefill",
+      "/dev/batching",
+      "/dev/paged-attention",
+      "/dev/speculative",
     ]);
-    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3]);
+    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([
+      1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3,
+    ]);
   });
 });

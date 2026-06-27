@@ -43,8 +43,16 @@ The agent maintains this file but does not self-certify visual correctness.
   precision drops, and the size/quality readouts feel believable and clearly illustrative.
 - MemoryBudget: inspect `/dev/memory-budget`; confirm weights vs KV cache vs overhead are legible
   and context length visibly affects the budget.
+- Part 3: inspect `/parts/3-software`; confirm prefill/decode, batching, PagedAttention, engines,
+  and speculative decoding read as one serving narrative.
 - PrefillDecode: inspect `/dev/prefill`; confirm the parallel-vs-loop distinction is obvious,
   the no-cache toggle reads as wasteful recompute, the KV grid fills cell-by-cell, and
   reduced-motion mode still teaches through stepped states.
+- BatchingTimeline: inspect `/dev/batching`; confirm continuous vs windowed admission makes wait
+  time and active batch occupancy easy to compare.
+- PagedAttention: inspect `/dev/paged-attention`; confirm logical tokens, block table entries, tail
+  waste, and prefix sharing read as one cache-allocation model.
+- SpeculativeDecoding: inspect `/dev/speculative`; confirm draft size and acceptance rate visibly
+  affect accepted tokens and speedup.
 - Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
   review flow clear.

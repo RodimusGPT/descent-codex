@@ -1368,6 +1368,364 @@ main {
   transition: fill 180ms ease, height 180ms ease, width 180ms ease, x 180ms ease, y 180ms ease;
 }
 
+.serving-viz {
+  align-content: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.serving-viz__header {
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
+}
+
+.serving-viz__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+
+.serving-viz__header p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.serving-controls {
+  align-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.serving-controls--split {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.serving-controls button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.serving-controls button[aria-pressed="true"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.serving-controls label,
+.serving-controls--split .viz-controls {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.serving-controls input {
+  accent-color: var(--color-active);
+  width: 100%;
+}
+
+.serving-controls button:focus-visible,
+.serving-controls input:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.serving-readout {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0;
+}
+
+.serving-readout div {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.serving-readout dt {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.serving-readout dd {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.batching-timeline__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.55rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.batching-timeline__axis,
+.batching-row {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(130px, 0.26fr) minmax(430px, 1fr);
+  min-width: 680px;
+}
+
+.batching-timeline__axis {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.batching-timeline__steps,
+.batching-row__cells {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(10, minmax(1.7rem, 1fr));
+}
+
+.batching-timeline__steps span {
+  text-align: center;
+}
+
+.batching-row__label {
+  align-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.6rem;
+}
+
+.batching-row__label span {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.batching-cell,
+.batching-capacity {
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  justify-items: center;
+  min-height: 2.1rem;
+}
+
+.batching-cell--empty {
+  background: var(--color-surface);
+}
+
+.batching-cell--waiting {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+}
+
+.batching-cell--active {
+  background: var(--color-cache);
+  border-color: var(--color-hw-accent);
+}
+
+.batching-cell--done {
+  background: var(--color-inert-soft);
+}
+
+.batching-capacity {
+  background: linear-gradient(
+      to top,
+      var(--color-active-wash) calc(var(--capacity, 0) * 100%),
+      transparent 0
+    ), var(--color-surface);
+  color: var(--color-text);
+}
+
+.paged-attention__stage {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(280px, 0.55fr) minmax(260px, 0.45fr);
+}
+
+.paged-attention__logical,
+.paged-attention__table {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.paged-attention__logical h3,
+.paged-attention__table h3 {
+  font-size: 0.86rem;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.paged-attention__tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.paged-attention__tokens span {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  justify-items: center;
+  width: 1.65rem;
+}
+
+.paged-block {
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 2.3rem minmax(4.5rem, 0.8fr) minmax(4.2rem, 0.7fr) minmax(5.5rem, 1fr);
+  min-width: 0;
+  padding: 0.65rem;
+}
+
+.paged-block span,
+.paged-block strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.paged-block__fill {
+  background: linear-gradient(
+      90deg,
+      var(--color-active-wash) calc(var(--block-fill, 0) * 100%),
+      transparent 0
+    ), var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-weight: 900;
+  padding: 0.35rem 0.5rem;
+  text-align: center;
+}
+
+.speculative-decoding__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.speculative-lane {
+  align-items: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(110px, 0.22fr) minmax(0, 1fr);
+  padding: 0.75rem;
+}
+
+.speculative-lane > span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.speculative-lane > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.speculative-lane--verify {
+  border-color: var(--color-model-accent);
+}
+
+.speculative-lane--output {
+  border-color: var(--color-cache);
+}
+
+.engine-overview {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.engine-overview article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.engine-overview h3 {
+  font-size: 1rem;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.engine-overview p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
 .prefill-decode {
   align-content: start;
   background: var(--color-surface);
@@ -1633,6 +1991,7 @@ main {
   .attention-fan__header,
   .float-exploder__header,
   .quantization-slider__header,
+  .serving-viz__header,
   .prefill-decode__header,
   .review-layout,
   .review-overview,
@@ -1641,6 +2000,8 @@ main {
   .qkv-viz__grid,
   .sampling-playground__body,
   .weight-zoom__stage,
+  .paged-attention__stage,
+  .speculative-lane,
   .prefill-settings {
     grid-template-columns: 1fr;
   }
