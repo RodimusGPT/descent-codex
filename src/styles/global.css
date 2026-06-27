@@ -380,8 +380,8 @@ main {
   align-items: start;
   display: grid;
   gap: clamp(1rem, 3vw, 2rem);
-  grid-template-columns: minmax(280px, 0.95fr) minmax(260px, 0.7fr);
-  margin-block: 2rem;
+  grid-template-columns: minmax(260px, 0.46fr) minmax(360px, 0.74fr);
+  margin-block: 3rem;
 }
 
 .scroll-scene__visual {
@@ -392,13 +392,13 @@ main {
   min-height: 380px;
   padding: clamp(1rem, 2vw, 1.5rem);
   position: sticky;
-  top: 1rem;
+  top: 5.25rem;
 }
 
 .scroll-scene__steps {
   display: grid;
-  gap: 35vh;
-  padding-block: 12vh;
+  gap: clamp(1rem, 6vh, 3rem);
+  padding-block: 5vh;
 }
 
 .scroll-scene__step {
@@ -408,9 +408,11 @@ main {
   border-radius: 8px;
   color: var(--color-text-muted);
   cursor: default;
-  display: block;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
   line-height: 1.6;
-  min-height: 8rem;
+  min-height: 7rem;
   padding: 1rem;
   text-align: left;
   transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
@@ -421,6 +423,18 @@ main {
   --step-border: var(--color-active);
   color: var(--color-text);
   transform: translateX(-0.2rem);
+}
+
+.scroll-scene__step-index {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.6;
+}
+
+.scroll-scene__step[aria-current="step"] .scroll-scene__step-index {
+  color: var(--color-active-strong);
 }
 
 .placeholder-visual {
@@ -492,8 +506,8 @@ main {
 .review-layout {
   align-items: start;
   display: grid;
-  gap: 1.25rem;
-  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr);
+  gap: 2rem;
+  grid-template-columns: minmax(220px, 0.24fr) minmax(0, 1fr);
 }
 
 .review-sidebar {
@@ -569,6 +583,7 @@ main {
 }
 
 .attention-fan {
+  align-content: start;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -579,10 +594,12 @@ main {
 }
 
 .attention-fan__header {
-  align-items: end;
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 0.5fr);
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
 }
 
 .attention-fan__header h2 {
@@ -600,12 +617,14 @@ main {
 
 .attention-fan__heads {
   align-items: center;
-  border: 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0.75rem;
 }
 
 .attention-fan__heads legend {
@@ -696,6 +715,7 @@ main {
 
 .float-exploder,
 .quantization-slider {
+  align-content: start;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -707,10 +727,12 @@ main {
 
 .float-exploder__header,
 .quantization-slider__header {
-  align-items: end;
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 0.5fr);
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
 }
 
 .float-exploder__header h2,
@@ -730,9 +752,13 @@ main {
 .viz-controls,
 .quantization-slider__model {
   align-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  padding: 0.75rem;
 }
 
 .viz-controls button,
@@ -900,6 +926,7 @@ main {
 }
 
 .prefill-decode {
+  align-content: start;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -910,10 +937,12 @@ main {
 }
 
 .prefill-decode__header {
-  align-items: end;
+  align-items: start;
+  border-bottom: 1px solid var(--color-border);
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 0.5fr);
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 720px);
+  padding-bottom: 1rem;
 }
 
 .prefill-decode__header h2 {
@@ -931,9 +960,13 @@ main {
 .prefill-controls,
 .prefill-settings {
   align-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  padding: 0.75rem;
 }
 
 .prefill-controls button {
@@ -968,7 +1001,7 @@ main {
 }
 
 .prefill-decode__stage {
-  background: var(--color-bg);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   display: grid;
@@ -1052,7 +1085,7 @@ main {
 
 .prefill-settings > label {
   align-items: start;
-  background: var(--color-bg);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   flex-direction: column;

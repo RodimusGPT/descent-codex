@@ -97,9 +97,6 @@ const ScrollScene = ({ render, steps, title = "Scroll scene" }: ScrollSceneProps
 
   return (
     <section aria-label={title} className="scroll-scene">
-      <div aria-live="polite" className="scroll-scene__visual">
-        {render ? render(activeStep) : <PlaceholderVisual activeStep={activeStep} steps={steps} />}
-      </div>
       <div className="scroll-scene__steps">
         {steps.map((step, index) => (
           <button
@@ -115,9 +112,13 @@ const ScrollScene = ({ render, steps, title = "Scroll scene" }: ScrollSceneProps
             }}
             type="button"
           >
-            {step.narration}
+            <span className="scroll-scene__step-index">{String(index + 1).padStart(2, "0")}</span>
+            <span>{step.narration}</span>
           </button>
         ))}
+      </div>
+      <div aria-live="polite" className="scroll-scene__visual">
+        {render ? render(activeStep) : <PlaceholderVisual activeStep={activeStep} steps={steps} />}
       </div>
     </section>
   );

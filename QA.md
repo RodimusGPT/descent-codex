@@ -9,6 +9,8 @@ The agent maintains this file but does not self-certify visual correctness.
   marks the current part.
 - Navigation: confirm the top nav, landing actions, part map, and previous/next links make it
   obvious how to move through the descent.
+- Layout flow: confirm scrollytelling steps read on the left with the sticky visual on the right,
+  and that sandbox pages scan as intro, controls, visual, then readouts.
 - Color contrast: confirm light and dark mode keep active states, token pills, muted labels, and
   review navigation readable against their backgrounds.
 - ScrollScene: confirm each placeholder scene advances while scrolling, and arrow keys move

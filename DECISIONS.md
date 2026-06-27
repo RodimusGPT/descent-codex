@@ -41,3 +41,5 @@
   as checkpoint UX fixes. These organize existing M0-M3 work without starting M4 scope.
 - Added explicit active/token foreground tokens and dark-mode highlight fills after checkpoint
   review found low-contrast text on highlighted backgrounds.
+- Reordered `ScrollScene` so narration precedes the sticky visual and standardized sandbox cards
+  around a top intro, grouped controls, primary visual, and readout flow.
