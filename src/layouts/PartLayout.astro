@@ -1,0 +1,29 @@
+---
+import ProgressRail from "../components/scroll/ProgressRail";
+import { PARTS } from "../lib/parts";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = {
+  partIndex: number;
+  question: string;
+  title: string;
+};
+
+const { partIndex, question, title } = Astro.props;
+---
+
+<BaseLayout title={title} description={question}>
+  <ProgressRail client:load currentPart={partIndex} parts={PARTS} />
+  <main class="part-shell">
+    <header class="part-hero">
+      <div>
+        <p class="part-kicker">Part {partIndex}</p>
+        <h1>{title}</h1>
+      </div>
+      <p class="part-question">{question}</p>
+    </header>
+    <article class="part-content">
+      <slot />
+    </article>
+  </main>
+</BaseLayout>

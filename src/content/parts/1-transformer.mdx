@@ -1,0 +1,43 @@
+---
+part: 1
+title: The transformer
+question: What is the model?
+accent: model
+---
+
+import DeeperBlock from "../../components/scroll/DeeperBlock";
+import ScrollScene from "../../components/scroll/ScrollScene";
+import Token from "../../components/scroll/Token";
+
+# The transformer
+
+The first descent layer treats the model as a stack that moves information between
+tokens. The recurring <Token text="token" /> will later anchor attention, Q/K/V,
+feed-forward work, routing, and sampling.
+
+<ScrollScene
+  client:load
+  title="Transformer placeholder"
+  steps={[
+    {
+      id: "tokens",
+      narration: "Text is split into tokens and mapped to vectors.",
+      visualLabel: "Token vectors enter the stack.",
+    },
+    {
+      id: "attention",
+      narration: "Attention lets each token read from the context around it.",
+      visualLabel: "The attention fan will anchor this part in M1.",
+    },
+    {
+      id: "logits",
+      narration: "The final layer scores the next token.",
+      visualLabel: "Logits become a sampled token.",
+    },
+  ]}
+/>
+
+<DeeperBlock summary="Go deeper">
+  This placeholder will expand into tokenization, embeddings, multi-head attention,
+  feed-forward layers, MoE routing, and sampling.
+</DeeperBlock>

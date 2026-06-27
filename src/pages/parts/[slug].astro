@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import PartLayout from "../../layouts/PartLayout.astro";
+
+type Props = {
+  entry: CollectionEntry<"parts">;
+};
+
+export async function getStaticPaths() {
+  const entries = await getCollection("parts");
+
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<PartLayout partIndex={entry.data.part} question={entry.data.question} title={entry.data.title}>
+  <Content />
+</PartLayout>

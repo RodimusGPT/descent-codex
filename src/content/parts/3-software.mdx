@@ -1,0 +1,43 @@
+---
+part: 3
+title: "Inference: software"
+question: How is it served?
+accent: software
+---
+
+import DeeperBlock from "../../components/scroll/DeeperBlock";
+import ScrollScene from "../../components/scroll/ScrollScene";
+import Token from "../../components/scroll/Token";
+
+# Inference: software
+
+The software layer explains why the first response token and later response tokens
+feel different. A prompt is processed in a prefill pass, then each <Token text="token" />
+is decoded one step at a time.
+
+<ScrollScene
+  client:load
+  title="Software placeholder"
+  steps={[
+    {
+      id: "prefill",
+      narration: "Prefill processes the whole prompt in parallel and builds the initial cache.",
+      visualLabel: "Prefill is compute-bound.",
+    },
+    {
+      id: "decode",
+      narration: "Decode emits one token per loop and reuses cached keys and values.",
+      visualLabel: "Decode is memory-bound.",
+    },
+    {
+      id: "serving",
+      narration: "Serving engines batch, page, cache, and schedule many requests around that loop.",
+      visualLabel: "The KV cache interactive arrives in M3.",
+    },
+  ]}
+/>
+
+<DeeperBlock summary="Go deeper">
+  M3 will introduce a standalone prefill/decode sandbox with a filling KV-cache grid
+  and tested memory formulas.
+</DeeperBlock>

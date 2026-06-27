@@ -1,0 +1,43 @@
+---
+part: 5
+title: Put it together
+question: Now show me the whole thing.
+accent: synthesis
+---
+
+import DeeperBlock from "../../components/scroll/DeeperBlock";
+import ScrollScene from "../../components/scroll/ScrollScene";
+import Token from "../../components/scroll/Token";
+
+# Put it together
+
+The final part replays the opening prompt after every layer has been explained.
+The reader should be able to follow one <Token text="token" /> from text, to model,
+to numbers, to software, to hardware, and back to text.
+
+<ScrollScene
+  client:load
+  title="Synthesis placeholder"
+  steps={[
+    {
+      id: "model",
+      narration: "The token enters the transformer.",
+      visualLabel: "Model layer recap.",
+    },
+    {
+      id: "numbers",
+      narration: "Weights and activations become numerical work.",
+      visualLabel: "Numbers layer recap.",
+    },
+    {
+      id: "hardware",
+      narration: "Software schedules the hardware path that produces the next token.",
+      visualLabel: "Full-stack replay arrives in M8.",
+    },
+  ]}
+/>
+
+<DeeperBlock summary="Go deeper">
+  M8 will turn this placeholder into the through-line replay and optional configuration
+  sandbox.
+</DeeperBlock>

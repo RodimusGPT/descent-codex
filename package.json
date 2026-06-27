@@ -1,0 +1,37 @@
+{
+  "name": "descent-codex",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro build",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "test": "vitest run",
+    "check:encoding": "bash -c 'if rg --glob \"!**/styles/tokens.css\" --glob \"!**/lib/encoding.ts\" \"#[0-9a-fA-F]{3,6}\" src; then exit 1; else test $? -eq 1; fi'",
+    "check": "bun run typecheck && bun run lint && bun run test && bun run check:encoding"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/tailwind": "^5.1.2",
+    "astro": "^4.16.18",
+    "d3": "^7.9.0",
+    "framer-motion": "^11.18.2",
+    "katex": "^0.16.22",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "scrollama": "^3.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,43 @@
+---
+part: 2
+title: Weights as numbers
+question: How are weights represented?
+accent: numbers
+---
+
+import DeeperBlock from "../../components/scroll/DeeperBlock";
+import ScrollScene from "../../components/scroll/ScrollScene";
+import Token from "../../components/scroll/Token";
+
+# Weights as numbers
+
+The second layer zooms from a model down to the numerical weights that make matrix
+multiplication possible. The same <Token text="token" /> is now carried by billions
+of floating-point or quantized parameters.
+
+<ScrollScene
+  client:load
+  title="Weights placeholder"
+  steps={[
+    {
+      id: "matrix",
+      narration: "A model is mostly matrices of learned numbers.",
+      visualLabel: "Model to layer to matrix.",
+    },
+    {
+      id: "float",
+      narration: "Floating point splits each number into sign, exponent, and mantissa fields.",
+      visualLabel: "The float exploder arrives in M2.",
+    },
+    {
+      id: "quant",
+      narration: "Quantization stores approximate values in fewer bits.",
+      visualLabel: "The quantization slider arrives in M2.",
+    },
+  ]}
+/>
+
+<DeeperBlock summary="Go deeper">
+  The M2 sandbox will expose FP32, FP16, BF16, INT8, Q4, and Q2 behavior with tested
+  math behind the visual readouts.
+</DeeperBlock>

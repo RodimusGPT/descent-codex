@@ -1,0 +1,41 @@
+---
+import Token from "../components/scroll/Token";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PARTS } from "../lib/parts";
+---
+
+<BaseLayout>
+  <main class="site-shell">
+    <section class="landing-hero" aria-labelledby="page-title">
+      <div class="landing-copy">
+        <p class="eyebrow">A top-to-bottom LLM inference explainer</p>
+        <h1 id="page-title">Descent</h1>
+        <p>
+          Follow one generated token from the transformer, through number formats and
+          serving software, down to the hardware work that makes inference happen.
+        </p>
+      </div>
+      <aside class="hook-panel" aria-label="Hook placeholder">
+        <div class="hook-panel__prompt">
+          When I press enter, the model predicts <Token text="one" /> token at a time.
+        </div>
+        <div>
+          <Token id={5021} text="descent" highlight />
+        </div>
+      </aside>
+    </section>
+
+    <nav class="descent-nav" aria-label="Descent parts">
+      {
+        PARTS.map((part) => (
+          <a href={`/parts/${part.slug}`}>
+            <strong>
+              {part.index}. {part.title}
+            </strong>
+            <span>{part.question}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </main>
+</BaseLayout>

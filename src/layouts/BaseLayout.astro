@@ -1,0 +1,34 @@
+---
+import "katex/dist/katex.min.css";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+type Props = {
+  description?: string;
+  title?: string;
+};
+
+const {
+  description = "A visual descent through LLM inference, from model behavior to GPU hardware.",
+  title = "Descent",
+} = Astro.props;
+const pageTitle = title === "Descent" ? title : `${title} | Descent`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      const storedTheme = localStorage.getItem("descent-theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = storedTheme ?? (prefersDark ? "dark" : "light");
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
