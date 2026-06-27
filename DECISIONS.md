@@ -24,3 +24,11 @@
   histogram stable in tests while still showing a roughly normal distribution with a few tails.
 - Model-size readouts use decimal GB (`params_billions * bytes_per_param`) so the simple
   relationship stays visible in the UI.
+
+## M3
+
+- The PrefillDecode work counter is intentionally illustrative: cached decode counts one unit per
+  emitted token, while no-cache decode sums the expanding recomputed prefix to expose the linear
+  vs quadratic shape.
+- The KV grid displays a fixed number of representative cells while the slider drives the actual
+  memory formula. This keeps the animation legible across context lengths.

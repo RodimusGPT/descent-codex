@@ -22,4 +22,6 @@ The agent maintains this file but does not self-certify visual correctness.
   toggling bits feels direct, and the BF16-vs-FP16 exponent/mantissa tradeoff is clear.
 - QuantizationSlider: inspect `/dev/quant`; confirm the histogram visibly stair-steps as
   precision drops, and the size/quality readouts feel believable and clearly illustrative.
-- PrefillDecode: pending M3.
+- PrefillDecode: inspect `/dev/prefill`; confirm the parallel-vs-loop distinction is obvious,
+  the no-cache toggle reads as wasteful recompute, the KV grid fills cell-by-cell, and
+  reduced-motion mode still teaches through stepped states.

@@ -626,6 +626,200 @@ main {
   transition: fill 180ms ease, height 180ms ease, width 180ms ease, x 180ms ease, y 180ms ease;
 }
 
+.prefill-decode {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.prefill-decode__header {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 0.5fr);
+}
+
+.prefill-decode__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+
+.prefill-decode__header p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.prefill-controls,
+.prefill-settings {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.prefill-controls button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.prefill-controls label,
+.prefill-settings label {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  font-weight: 800;
+  gap: 0.4rem;
+}
+
+.prefill-controls input,
+.prefill-settings input {
+  accent-color: var(--color-active);
+}
+
+.prefill-controls button:focus-visible,
+.prefill-controls input:focus-visible,
+.prefill-settings input:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.prefill-decode__stage {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.phase-strip {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.phase-strip__item {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-weight: 900;
+  padding: 0.55rem 0.75rem;
+  text-align: center;
+}
+
+.phase-strip__item.is-active {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-text);
+}
+
+.token-flow {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.token-flow strong {
+  color: var(--color-text-muted);
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.token-flow__row {
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 4.8rem;
+}
+
+.kv-cache {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.kv-cache__cell {
+  aspect-ratio: 1;
+  background: var(--color-inert-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.kv-cache__cell--filled {
+  background: var(--color-cache);
+  border-color: var(--color-hw-accent);
+}
+
+.kv-cache__cell--recompute {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  transform: scale(0.92);
+}
+
+.prefill-settings {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.4fr) minmax(280px, 1fr);
+}
+
+.prefill-settings > label {
+  align-items: start;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.85rem;
+}
+
+.prefill-settings input[type="range"] {
+  width: 100%;
+}
+
+.prefill-readout {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0;
+}
+
+.prefill-readout div {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.prefill-readout dt {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.prefill-readout dd {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0;
+}
+
 .progress-rail {
   align-items: center;
   display: grid;
