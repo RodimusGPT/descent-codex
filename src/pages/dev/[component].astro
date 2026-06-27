@@ -1,14 +1,14 @@
 ---
 import AttentionFan from "../../components/viz/AttentionFan";
+import FloatExploder from "../../components/viz/FloatExploder";
+import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export function getStaticPaths() {
-  return [
-    {
-      params: { component: "attention" },
-      props: { component: "attention" },
-    },
-  ];
+  return ["attention", "float", "quant"].map((component) => ({
+    params: { component },
+    props: { component },
+  }));
 }
 
 const { component } = Astro.props;
@@ -19,5 +19,7 @@ const { component } = Astro.props;
     <p class="eyebrow">Sandbox</p>
     <h1>{component}</h1>
     {component === "attention" ? <AttentionFan client:load /> : null}
+    {component === "float" ? <FloatExploder client:load /> : null}
+    {component === "quant" ? <QuantizationSlider client:load /> : null}
   </main>
 </BaseLayout>

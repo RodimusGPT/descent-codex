@@ -17,3 +17,10 @@
 - Used deterministic mock attention heads rather than model-derived weights. The goal for M1
   is legible, distinct behavior in the standalone fan; later prose can swap in richer data
   without changing the component contract.
+
+## M2
+
+- The quantization sandbox uses a deterministic synthetic weight distribution. This keeps the
+  histogram stable in tests while still showing a roughly normal distribution with a few tails.
+- Model-size readouts use decimal GB (`params_billions * bytes_per_param`) so the simple
+  relationship stays visible in the UI.

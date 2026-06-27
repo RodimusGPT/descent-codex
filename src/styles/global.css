@@ -423,6 +423,209 @@ main {
   padding: 1rem;
 }
 
+.float-exploder,
+.quantization-slider {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.float-exploder__header,
+.quantization-slider__header {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 0.5fr);
+}
+
+.float-exploder__header h2,
+.quantization-slider__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0.4rem 0 0;
+}
+
+.float-exploder__header p,
+.quantization-slider__header p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.viz-controls,
+.quantization-slider__model {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.viz-controls button,
+.quantization-slider__model button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.viz-controls button[aria-pressed="true"],
+.quantization-slider__model button[aria-pressed="true"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+}
+
+.viz-controls button:focus-visible,
+.quantization-slider__model button:focus-visible,
+.quantization-slider__model input:focus-visible,
+.float-bit:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.float-bit-grid {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(var(--bit-count), minmax(1.45rem, 1fr));
+  overflow-x: auto;
+  padding-block: 0.5rem;
+}
+
+.float-bit {
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  min-width: 1.45rem;
+}
+
+.float-bit--sign {
+  border-color: var(--color-active-strong);
+}
+
+.float-bit--exponent {
+  border-color: var(--color-model-accent);
+}
+
+.float-bit--mantissa {
+  border-color: var(--color-hw-accent);
+}
+
+.float-bit[aria-pressed="true"] {
+  background: var(--color-active-wash);
+}
+
+.float-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.float-field {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.35rem 0.6rem;
+}
+
+.float-field--sign {
+  border-color: var(--color-active-strong);
+}
+
+.float-field--exponent {
+  border-color: var(--color-model-accent);
+}
+
+.float-field--mantissa {
+  border-color: var(--color-hw-accent);
+}
+
+.float-readout,
+.quantization-readout {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: 0;
+}
+
+.float-readout div,
+.quantization-readout div {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.float-readout dt,
+.quantization-readout dt {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.float-readout dd,
+.quantization-readout dd {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.quantization-slider__model span {
+  color: var(--color-text-muted);
+  font-weight: 800;
+}
+
+.quantization-slider__model label {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  gap: 0.35rem;
+  font-weight: 800;
+}
+
+.quantization-slider__model input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  padding: 0.45rem 0.5rem;
+  width: 5.5rem;
+}
+
+.quantization-histogram {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: block;
+  height: auto;
+  max-height: 320px;
+  min-height: 220px;
+  overflow: visible;
+  padding: 1rem;
+  width: 100%;
+}
+
+.quantization-histogram rect {
+  transition: fill 180ms ease, height 180ms ease, width 180ms ease, x 180ms ease, y 180ms ease;
+}
+
 .progress-rail {
   align-items: center;
   display: grid;

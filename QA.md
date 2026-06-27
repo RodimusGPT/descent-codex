@@ -18,6 +18,8 @@ The agent maintains this file but does not self-certify visual correctness.
 - AttentionFan: inspect `/dev/attention`; confirm the three heads show distinct patterns,
   high-weight lines read warmer/thicker, click and arrow-key query changes feel coherent,
   and reduced-motion mode removes tweening without losing the fan relationship.
-- FloatExploder: pending M2.
-- QuantizationSlider: pending M2.
+- FloatExploder: inspect `/dev/float`; confirm bit boundaries match FP32, FP16, and BF16,
+  toggling bits feels direct, and the BF16-vs-FP16 exponent/mantissa tradeoff is clear.
+- QuantizationSlider: inspect `/dev/quant`; confirm the histogram visibly stair-steps as
+  precision drops, and the size/quality readouts feel believable and clearly illustrative.
 - PrefillDecode: pending M3.
