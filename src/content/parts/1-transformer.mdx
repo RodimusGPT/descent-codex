@@ -5,39 +5,117 @@ question: What is the model?
 accent: model
 ---
 
+import AttentionFan from "../../components/viz/AttentionFan";
 import DeeperBlock from "../../components/scroll/DeeperBlock";
-import ScrollScene from "../../components/scroll/ScrollScene";
+import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
+import MoERouter from "../../components/viz/MoERouter";
+import QKVMultiHead from "../../components/viz/QKVMultiHead";
+import SamplingPlayground from "../../components/viz/SamplingPlayground";
 import Token from "../../components/scroll/Token";
+import Tokenizer from "../../components/viz/Tokenizer";
+import TransformerStack from "../../components/viz/TransformerStack";
 
 # The transformer
 
-The first descent layer treats the model as a stack that moves information between
-tokens. The recurring <Token text="token" /> will later anchor attention, Q/K/V,
-feed-forward work, routing, and sampling.
+At this level of the descent, the model is not yet a server or a GPU. It is a
+function that repeatedly turns context into one next <Token text="token" />. The
+same loop will matter later for KV cache and hardware, but first we need the
+model-side pieces: tokens, vectors, layers, attention, feed-forward compute, and
+sampling.
 
-<ScrollScene
-  client:load
-  title="Transformer placeholder"
-  steps={[
-    {
-      id: "tokens",
-      narration: "Text is split into tokens and mapped to vectors.",
-      visualLabel: "Token vectors enter the stack.",
-    },
-    {
-      id: "attention",
-      narration: "Attention lets each token read from the context around it.",
-      visualLabel: "The attention fan will anchor this part in M1.",
-    },
-    {
-      id: "logits",
-      narration: "The final layer scores the next token.",
-      visualLabel: "Logits become a sampled token.",
-    },
-  ]}
-/>
+## Tokenization
 
-<DeeperBlock summary="Go deeper">
-  This placeholder will expand into tokenization, embeddings, multi-head attention,
-  feed-forward layers, MoE routing, and sampling.
+The prompt starts as plain text. Before the model can use it, a tokenizer splits
+that text into subword pieces and maps each piece to an integer ID from the
+vocabulary. Many common words are one token; rare or compound words are assembled
+from smaller pieces. The important thing is that the model never sees raw
+characters. It sees a sequence of token IDs.
+
+<Tokenizer client:load />
+
+<DeeperBlock summary="Tokenizer detail">
+  Production tokenizers are usually BPE-style or unigram-style systems learned from
+  text. They keep frequent chunks intact and fall back to smaller chunks for rare
+  strings. The result is compact enough for efficient inference while still being
+  flexible enough to represent new words.
 </DeeperBlock>
+
+## Embeddings
+
+Each token ID indexes a row in an embedding table. That row is a vector: a list of
+numbers that places the token in the model's learned space. Tokens that behave
+similarly often end up near each other, and useful directions in the space encode
+relationships. This is why a token can carry more than spelling; it arrives with
+contextual affordances the stack can work with.
+
+<EmbeddingSpace client:load />
+
+## The stack
+
+The embedded tokens flow through many nearly identical layers. Modern inference
+models typically use a pre-norm structure: RMSNorm prepares the stream, attention
+moves information between tokens, a residual path keeps the original stream
+available, and a feed-forward block does per-token compute. Repeating that block
+lets shallow pattern matches turn into more abstract features.
+
+<TransformerStack client:load />
+
+<DeeperBlock summary="Layer detail">
+  A simplified layer is `x = x + Attention(RMSNorm(x))`, then
+  `x = x + FFN(RMSNorm(x))`. The residual additions are why later layers can refine
+  earlier information instead of replacing it wholesale.
+</DeeperBlock>
+
+## Attention
+
+Attention is how one token reads other tokens in the same context. For a selected
+query token, the model assigns weights over prior and nearby tokens, then blends
+their value vectors. Different heads can specialize: one may look backward, one
+may bridge syntax, and another may spread context broadly.
+
+<AttentionFan client:load />
+
+## Q, K, V, and multi-head attention
+
+Inside attention, the stream is projected into Query, Key, and Value vectors. A
+query asks what the current token needs; keys advertise what other tokens contain;
+values are the information that gets mixed back in. Scores come from scaled
+`Q dot K`, then softmax turns scores into weights. Multi-head attention runs
+several versions of this in parallel. GQA and MQA share K/V heads across query
+heads, which matters later because fewer KV heads shrink the cache in Part 3.
+
+<QKVMultiHead client:load />
+
+<DeeperBlock summary="Attention math">
+  For one head, the core operation is
+  `softmax(QK^T / sqrt(d_head)) V`. Causal masking prevents a token from reading
+  future tokens during generation.
+</DeeperBlock>
+
+## FFN and MoE
+
+After attention moves context around, the feed-forward block does most of the
+per-token compute. Dense models run the same FFN for every token. Mixture-of-
+Experts models replace that with many expert FFNs and a router that activates
+only a top-k subset. That is how a model can have many total parameters while
+running only a smaller active fraction for a given token.
+
+<MoERouter client:load />
+
+<DeeperBlock summary="Active vs total parameters">
+  In an MoE layer, the router scores experts and sends the token to only a few of
+  them. A model might store more than 100B total parameters while activating only
+  a few billion per token. The inactive experts still consume memory, but they do
+  not all run on every token.
+</DeeperBlock>
+
+## Logits to token
+
+At the end of the stack, a projection maps the final hidden state to one logit per
+vocabulary item. Temperature changes how sharp the distribution is. Top-k keeps
+only the highest ranked candidates; top-p keeps the smallest set whose cumulative
+probability crosses a threshold. A token is sampled, appended to the context, and
+the whole loop repeats. That autoregressive loop is what makes the KV cache in
+Part 3 necessary.
+
+<SamplingPlayground client:load />

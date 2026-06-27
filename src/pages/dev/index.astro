@@ -3,12 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SANDBOXES } from "../../lib/sandboxes";
 ---
 
-<BaseLayout title="M0-M3 Review">
+<BaseLayout title="Interactive Review">
   <main class="site-shell review-shell" id="main-content">
     <header class="review-hero">
       <div>
-        <p class="eyebrow">Checkpoint review</p>
-        <h1>M0-M3 MVP</h1>
+        <p class="eyebrow">Interactive review</p>
+        <h1>Sandboxes</h1>
       </div>
       <a href="/parts/0-hook">Open the descent</a>
     </header>
@@ -17,10 +17,10 @@ import { SANDBOXES } from "../../lib/sandboxes";
       <div>
         <h2 id="review-overview-title">Review path</h2>
         <p>
-          The checkpoint covers the spine plus the first four standalone signature sandboxes.
+          Open any standalone interactive sandbox. Part 1 sandboxes are now included for M4 review.
         </p>
       </div>
-      <nav class="review-grid" aria-label="M0-M3 sandboxes">
+      <nav class="review-grid" aria-label="Interactive sandboxes">
         {
           SANDBOXES.map((sandbox) => (
             <a href={sandbox.path}>

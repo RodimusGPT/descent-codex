@@ -15,13 +15,19 @@ describe("descent spine", () => {
     ]);
   });
 
-  it("defines the M0-M3 review sandboxes in milestone order", () => {
+  it("defines review sandboxes in milestone order", () => {
     expect(SANDBOXES.map((sandbox) => sandbox.path)).toEqual([
+      "/dev/tokenizer",
+      "/dev/embedding",
+      "/dev/stack",
       "/dev/attention",
+      "/dev/qkv",
+      "/dev/moe",
+      "/dev/sampling",
       "/dev/float",
       "/dev/quant",
       "/dev/prefill",
     ]);
-    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([1, 2, 2, 3]);
+    expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([1, 1, 1, 1, 1, 1, 1, 2, 2, 3]);
   });
 });

@@ -1,8 +1,14 @@
 ---
 import AttentionFan from "../../components/viz/AttentionFan";
+import EmbeddingSpace from "../../components/viz/EmbeddingSpace";
 import FloatExploder from "../../components/viz/FloatExploder";
+import MoERouter from "../../components/viz/MoERouter";
 import PrefillDecode from "../../components/viz/PrefillDecode";
+import QKVMultiHead from "../../components/viz/QKVMultiHead";
 import QuantizationSlider from "../../components/viz/QuantizationSlider";
+import SamplingPlayground from "../../components/viz/SamplingPlayground";
+import Tokenizer from "../../components/viz/Tokenizer";
+import TransformerStack from "../../components/viz/TransformerStack";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SANDBOXES } from "../../lib/sandboxes";
 
@@ -29,7 +35,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
 
     <div class="review-layout">
       <aside class="review-sidebar" aria-label="Checkpoint sandboxes">
-        <p class="review-sidebar__label">Signature sandboxes</p>
+        <p class="review-sidebar__label">Interactive sandboxes</p>
         <nav>
           {
             SANDBOXES.map((sandbox) => (
@@ -46,7 +52,13 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
       </aside>
 
       <section class="review-workspace" aria-label={`${activeSandbox.label} sandbox`}>
+        {component === "tokenizer" ? <Tokenizer client:load /> : null}
+        {component === "embedding" ? <EmbeddingSpace client:load /> : null}
+        {component === "stack" ? <TransformerStack client:load /> : null}
         {component === "attention" ? <AttentionFan client:load /> : null}
+        {component === "qkv" ? <QKVMultiHead client:load /> : null}
+        {component === "moe" ? <MoERouter client:load /> : null}
+        {component === "sampling" ? <SamplingPlayground client:load /> : null}
         {component === "float" ? <FloatExploder client:load /> : null}
         {component === "quant" ? <QuantizationSlider client:load /> : null}
         {component === "prefill" ? <PrefillDecode client:load /> : null}

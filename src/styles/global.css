@@ -582,6 +582,255 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.m4-panel {
+  align-content: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.m4-panel__header {
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.6rem;
+  max-width: 760px;
+  padding-bottom: 1rem;
+}
+
+.m4-panel__header h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+}
+
+.m4-panel__header p:not(.eyebrow),
+.m4-note {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.m4-panel button:focus-visible,
+.m4-panel textarea:focus-visible,
+.m4-panel input:focus-visible,
+.embedding-space__point:focus-visible {
+  outline: 3px solid var(--color-active);
+  outline-offset: 3px;
+}
+
+.tokenizer-viz__input {
+  color: var(--color-text-muted);
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+}
+
+.tokenizer-viz__input textarea {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  line-height: 1.55;
+  padding: 0.85rem;
+  resize: vertical;
+}
+
+.tokenizer-viz__tokens,
+.sampling-playground__tokens {
+  align-content: start;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 4.5rem;
+  padding: 1rem;
+}
+
+.embedding-space__body,
+.transformer-stack__body,
+.qkv-viz__grid,
+.sampling-playground__body {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(220px, 0.3fr);
+}
+
+.embedding-space__plot {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-height: 300px;
+  width: 100%;
+}
+
+.embedding-space__axis {
+  stroke: var(--color-border);
+  stroke-width: 0.7;
+}
+
+.embedding-space__point {
+  fill: var(--color-model-accent);
+  opacity: 0.72;
+  stroke: var(--color-surface);
+  stroke-width: 1.4;
+}
+
+.embedding-space__point.is-selected {
+  fill: var(--color-active);
+  opacity: 1;
+  stroke: var(--color-active-strong);
+  stroke-width: 2;
+}
+
+.embedding-space__readout,
+.sampling-playground__loop {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.embedding-space__readout span,
+.embedding-space__readout p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.embedding-space__chips,
+.transformer-stack__layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.embedding-space__chips button,
+.transformer-stack__layers button,
+.moe-router__controls button,
+.sampling-playground__loop button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.5rem 0.75rem;
+}
+
+.embedding-space__chips button[aria-pressed="true"],
+.transformer-stack__layers button[aria-pressed="true"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+  color: var(--color-on-active-wash);
+}
+
+.transformer-stack__layers {
+  align-content: start;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.transformer-stack__block {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem;
+}
+
+.transformer-stack__block div {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-weight: 800;
+  padding: 0.75rem;
+}
+
+.qkv-viz__vector,
+.qkv-viz__scores,
+.moe-router__experts,
+.sampling-playground__bars {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.qkv-viz__vector span {
+  align-self: end;
+  background: linear-gradient(to top, var(--color-model-accent), var(--color-active));
+  border-radius: 6px 6px 0 0;
+  display: inline-block;
+  height: calc(var(--bar-value, 0.2) * 7rem);
+  min-height: 1.2rem;
+  width: 2rem;
+}
+
+.qkv-viz__scores div,
+.moe-router__expert,
+.sampling-bar {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(70px, 0.32fr) minmax(120px, 1fr) auto;
+}
+
+.qkv-viz__scores meter,
+.moe-router__expert meter,
+.sampling-bar meter {
+  width: 100%;
+}
+
+.moe-router__controls,
+.sampling-playground__controls {
+  align-items: stretch;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.moe-router__controls > label,
+.sampling-playground__controls label {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  display: grid;
+  font-weight: 800;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.moe-router__controls input,
+.sampling-playground__controls input {
+  accent-color: var(--color-active);
+  width: 100%;
+}
+
+.moe-router__expert.is-active,
+.sampling-bar.is-active {
+  color: var(--color-text);
+}
+
+.moe-router__expert:not(.is-active),
+.sampling-bar:not(.is-active) {
+  color: var(--color-text-muted);
+}
+
 .attention-fan {
   align-content: start;
   background: var(--color-surface);
@@ -1193,6 +1442,10 @@ main {
   .prefill-decode__header,
   .review-layout,
   .review-overview,
+  .embedding-space__body,
+  .transformer-stack__body,
+  .qkv-viz__grid,
+  .sampling-playground__body,
   .prefill-settings {
     grid-template-columns: 1fr;
   }
@@ -1217,7 +1470,10 @@ main {
 
   .part-pager,
   .phase-strip,
-  .token-flow {
+  .token-flow,
+  .qkv-viz__scores div,
+  .moe-router__expert,
+  .sampling-bar {
     grid-template-columns: 1fr;
   }
 

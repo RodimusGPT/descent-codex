@@ -21,9 +21,19 @@ The agent maintains this file but does not self-certify visual correctness.
 
 ## Upcoming Signature Sandboxes
 
+- Part 1: inspect `/parts/1-transformer`; confirm the tokenizer, embeddings, stack, attention,
+  Q/K/V, MoE, sampling, and autoregression sections read as one transformer narrative.
+- Tokenizer: inspect `/dev/tokenizer`; confirm edits split into clear token pieces and IDs.
+- EmbeddingSpace: inspect `/dev/embedding`; confirm clusters are legible and point selection is
+  obvious.
+- TransformerStack: inspect `/dev/stack`; confirm the repeated layer structure is easy to scan.
 - AttentionFan: inspect `/dev/attention`; confirm the three heads show distinct patterns,
   high-weight lines read warmer/thicker, click and arrow-key query changes feel coherent,
   and reduced-motion mode removes tweening without losing the fan relationship.
+- QKVMultiHead: inspect `/dev/qkv`; confirm head switching changes score emphasis.
+- MoERouter: inspect `/dev/moe`; confirm top-k routing makes active vs idle experts clear.
+- SamplingPlayground: inspect `/dev/sampling`; confirm temperature/top-k/top-p controls and the
+  autoregressive loop are understandable.
 - FloatExploder: inspect `/dev/float`; confirm bit boundaries match FP32, FP16, and BF16,
   toggling bits feels direct, and the BF16-vs-FP16 exponent/mantissa tradeoff is clear.
 - QuantizationSlider: inspect `/dev/quant`; confirm the histogram visibly stair-steps as
@@ -31,5 +41,5 @@ The agent maintains this file but does not self-certify visual correctness.
 - PrefillDecode: inspect `/dev/prefill`; confirm the parallel-vs-loop distinction is obvious,
   the no-cache toggle reads as wasteful recompute, the KV grid fills cell-by-cell, and
   reduced-motion mode still teaches through stepped states.
-- Review hub: inspect `/dev/`; confirm the M0-M3 sandbox list and per-sandbox side navigation
-  make the checkpoint flow clear.
+- Review hub: inspect `/dev/`; confirm the sandbox list and per-sandbox side navigation make the
+  review flow clear.

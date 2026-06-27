@@ -43,3 +43,10 @@
   review found low-contrast text on highlighted backgrounds.
 - Reordered `ScrollScene` so narration precedes the sticky visual and standardized sandbox cards
   around a top intro, grouped controls, primary visual, and readout flow.
+
+## M4
+
+- Built the non-signature Part 1 visuals as lightweight React islands with shared helper math in
+  `transformer.ts`. They are intentionally simpler than the four signature sandboxes.
+- Folded the autoregression animation into `SamplingPlayground` instead of adding another
+  top-level project-structure component.
