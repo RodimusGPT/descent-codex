@@ -49,6 +49,80 @@ textarea {
 
 main {
   min-height: 100vh;
+  scroll-margin-top: 5rem;
+}
+
+.skip-link {
+  background: var(--color-active);
+  border-radius: 0 0 8px 0;
+  color: var(--color-text);
+  font-weight: 900;
+  left: 0;
+  padding: 0.6rem 0.8rem;
+  position: fixed;
+  top: 0;
+  transform: translateY(-120%);
+  transition: transform 120ms ease;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  align-items: center;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.8rem var(--space-page);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-brand {
+  align-items: center;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 0.55rem;
+  text-decoration: none;
+}
+
+.site-brand__mark {
+  align-items: center;
+  background: var(--color-active);
+  border: 1px solid var(--color-active-strong);
+  border-radius: 8px;
+  display: grid;
+  font-family: var(--font-mono);
+  height: 2rem;
+  justify-items: center;
+  width: 2rem;
+}
+
+.site-header__nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.site-header__nav a {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-weight: 800;
+  padding: 0.45rem 0.7rem;
+  text-decoration: none;
+}
+
+.site-header__nav a[aria-current="page"] {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .site-shell,
@@ -68,6 +142,31 @@ main {
 
 .landing-copy {
   max-width: 720px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.hero-actions a,
+.review-hero > a {
+  background: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 999px;
+  color: var(--color-bg);
+  font-weight: 900;
+  padding: 0.65rem 0.9rem;
+  text-decoration: none;
+}
+
+.hero-actions a + a,
+.review-hero > a {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .eyebrow,
@@ -131,7 +230,23 @@ main {
   text-decoration: none;
 }
 
+.descent-nav a:hover,
+.review-grid a:hover,
+.review-sidebar a:hover,
+.part-map a:hover,
+.part-pager a:hover {
+  border-color: var(--color-active);
+}
+
 .descent-nav a:focus-visible,
+.hero-actions a:focus-visible,
+.part-map a:focus-visible,
+.part-pager a:focus-visible,
+.review-grid a:focus-visible,
+.review-sidebar a:focus-visible,
+.review-hero > a:focus-visible,
+.site-brand:focus-visible,
+.site-header__nav a:focus-visible,
 .token:focus-visible,
 .scroll-scene__step:focus-visible,
 .progress-rail a:focus-visible,
@@ -162,6 +277,69 @@ main {
   display: grid;
   gap: 2rem;
   padding-block: 4rem;
+}
+
+.part-map {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: -1px;
+  padding: 0.75rem;
+}
+
+.part-map a {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  min-height: 5.25rem;
+  padding: 0.65rem;
+  text-decoration: none;
+}
+
+.part-map a[aria-current="page"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+}
+
+.part-map span,
+.part-pager span,
+.review-sidebar span,
+.review-grid span {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.part-map strong {
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.part-pager {
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-block: 2rem 4rem;
+}
+
+.part-pager a {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.part-pager a:last-child {
+  text-align: right;
 }
 
 .part-content h1,
@@ -286,16 +464,105 @@ main {
   padding-top: 1rem;
 }
 
-.dev-sandbox {
+.dev-sandbox,
+.review-shell {
   display: grid;
   gap: 1.5rem;
 }
 
-.dev-sandbox h1 {
+.dev-sandbox h1,
+.review-hero h1 {
   font-size: clamp(2rem, 4vw, 3.8rem);
   letter-spacing: 0;
   line-height: 1;
   margin: 0;
+}
+
+.review-hero {
+  align-items: end;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-block: 2.5rem 1.5rem;
+}
+
+.review-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr);
+}
+
+.review-sidebar {
+  display: grid;
+  gap: 0.75rem;
+  position: sticky;
+  top: 5rem;
+}
+
+.review-sidebar__label {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 900;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.review-sidebar nav,
+.review-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.review-sidebar a,
+.review-grid a {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem;
+  text-decoration: none;
+}
+
+.review-sidebar a[aria-current="page"] {
+  background: var(--color-active-wash);
+  border-color: var(--color-active-strong);
+}
+
+.review-workspace {
+  display: grid;
+  min-width: 0;
+}
+
+.review-workspace > * {
+  min-width: 0;
+  width: 100%;
+}
+
+.review-overview {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(220px, 0.38fr) minmax(0, 1fr);
+  padding-block: 1rem 4rem;
+}
+
+.review-overview h2 {
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  letter-spacing: 0;
+  line-height: 1.05;
+  margin: 0 0 0.75rem;
+}
+
+.review-overview p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.review-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .attention-fan {
@@ -879,12 +1146,52 @@ main {
 @media (max-width: 860px) {
   .landing-hero,
   .part-hero,
-  .scroll-scene {
+  .scroll-scene,
+  .attention-fan__header,
+  .float-exploder__header,
+  .quantization-slider__header,
+  .prefill-decode__header,
+  .review-layout,
+  .review-overview,
+  .prefill-settings {
     grid-template-columns: 1fr;
+  }
+
+  .site-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .site-header__nav {
+    justify-content: space-between;
   }
 
   .part-shell {
     padding-left: var(--space-page);
+  }
+
+  .part-map,
+  .review-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .part-pager,
+  .phase-strip,
+  .token-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .part-pager a:last-child {
+    text-align: left;
+  }
+
+  .review-hero {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .review-sidebar {
+    position: static;
   }
 
   .progress-rail {

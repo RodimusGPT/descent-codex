@@ -4,24 +4,53 @@ import FloatExploder from "../../components/viz/FloatExploder";
 import PrefillDecode from "../../components/viz/PrefillDecode";
 import QuantizationSlider from "../../components/viz/QuantizationSlider";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SANDBOXES } from "../../lib/sandboxes";
 
 export function getStaticPaths() {
-  return ["attention", "float", "quant", "prefill"].map((component) => ({
-    params: { component },
-    props: { component },
+  return SANDBOXES.map((sandbox) => ({
+    params: { component: sandbox.slug },
+    props: { component: sandbox.slug },
   }));
 }
 
 const { component } = Astro.props;
+const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ?? SANDBOXES[0];
 ---
 
-<BaseLayout title={`Dev: ${component}`}>
-  <main class="site-shell dev-sandbox">
-    <p class="eyebrow">Sandbox</p>
-    <h1>{component}</h1>
-    {component === "attention" ? <AttentionFan client:load /> : null}
-    {component === "float" ? <FloatExploder client:load /> : null}
-    {component === "quant" ? <QuantizationSlider client:load /> : null}
-    {component === "prefill" ? <PrefillDecode client:load /> : null}
+<BaseLayout title={`Review: ${activeSandbox.title}`}>
+  <main class="site-shell review-shell" id="main-content">
+    <header class="review-hero">
+      <div>
+        <p class="eyebrow">M0-M3 checkpoint</p>
+        <h1>{activeSandbox.label}</h1>
+      </div>
+      <a href="/dev/">All sandboxes</a>
+    </header>
+
+    <div class="review-layout">
+      <aside class="review-sidebar" aria-label="Checkpoint sandboxes">
+        <p class="review-sidebar__label">Signature sandboxes</p>
+        <nav>
+          {
+            SANDBOXES.map((sandbox) => (
+              <a
+                aria-current={sandbox.slug === activeSandbox.slug ? "page" : undefined}
+                href={sandbox.path}
+              >
+                <span>Part {sandbox.part}</span>
+                <strong>{sandbox.label}</strong>
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <section class="review-workspace" aria-label={`${activeSandbox.label} sandbox`}>
+        {component === "attention" ? <AttentionFan client:load /> : null}
+        {component === "float" ? <FloatExploder client:load /> : null}
+        {component === "quant" ? <QuantizationSlider client:load /> : null}
+        {component === "prefill" ? <PrefillDecode client:load /> : null}
+      </section>
+    </div>
   </main>
 </BaseLayout>

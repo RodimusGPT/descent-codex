@@ -37,3 +37,5 @@
 
 - Allowed the Console review host in Astro's Vite dev-server config so the checkpoint server can
   be opened through the forwarded URL.
+- Added a persistent site header, explicit part map, adjacent-part pager, and `/dev/` review hub
+  as checkpoint UX fixes. These organize existing M0-M3 work without starting M4 scope.

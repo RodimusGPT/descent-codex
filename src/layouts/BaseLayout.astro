@@ -2,6 +2,7 @@
 import "katex/dist/katex.min.css";
 import "../styles/tokens.css";
 import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
 
 type Props = {
   description?: string;
@@ -13,6 +14,7 @@ const {
   title = "Descent",
 } = Astro.props;
 const pageTitle = title === "Descent" ? title : `${title} | Descent`;
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -29,6 +31,7 @@ const pageTitle = title === "Descent" ? title : `${title} | Descent`;
     </script>
   </head>
   <body>
+    <SiteHeader currentPath={currentPath} />
     <slot />
   </body>
 </html>

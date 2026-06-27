@@ -10,11 +10,14 @@ type Props = {
 };
 
 const { partIndex, question, title } = Astro.props;
+const currentPart = PARTS.find((part) => part.index === partIndex) ?? PARTS[0];
+const previousPart = PARTS.find((part) => part.index === partIndex - 1);
+const nextPart = PARTS.find((part) => part.index === partIndex + 1);
 ---
 
 <BaseLayout title={title} description={question}>
   <ProgressRail client:load currentPart={partIndex} parts={PARTS} />
-  <main class="part-shell">
+  <main class="part-shell" id="main-content">
     <header class="part-hero">
       <div>
         <p class="part-kicker">Part {partIndex}</p>
@@ -22,8 +25,47 @@ const { partIndex, question, title } = Astro.props;
       </div>
       <p class="part-question">{question}</p>
     </header>
+    <nav class="part-map" aria-label="Descent parts">
+      {
+        PARTS.map((part) => (
+          <a
+            aria-current={part.slug === currentPart.slug ? "page" : undefined}
+            href={`/parts/${part.slug}`}
+          >
+            <span>{part.index}</span>
+            <strong>{part.title}</strong>
+          </a>
+        ))
+      }
+    </nav>
     <article class="part-content">
       <slot />
     </article>
+    <nav class="part-pager" aria-label="Adjacent parts">
+      {
+        previousPart ? (
+          <a href={`/parts/${previousPart.slug}`}>
+            <span>Previous</span>
+            <strong>
+              {previousPart.index}. {previousPart.title}
+            </strong>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        nextPart ? (
+          <a href={`/parts/${nextPart.slug}`}>
+            <span>Next</span>
+            <strong>
+              {nextPart.index}. {nextPart.title}
+            </strong>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
   </main>
 </BaseLayout>

@@ -1,0 +1,29 @@
+---
+import { PARTS } from "../lib/parts";
+
+type Props = {
+  currentPath: string;
+};
+
+const { currentPath } = Astro.props;
+const currentPart = PARTS.find((part) => currentPath.includes(`/parts/${part.slug}`));
+const isReview = currentPath.startsWith("/dev");
+---
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+  <a class="site-brand" href="/" aria-label="Descent home">
+    <span class="site-brand__mark">D</span>
+    <span>Descent</span>
+  </a>
+  <nav class="site-header__nav" aria-label="Primary navigation">
+    <a href="/" aria-current={currentPath === "/" ? "page" : undefined}>Home</a>
+    <a
+      href={currentPart ? `/parts/${currentPart.slug}` : "/parts/0-hook"}
+      aria-current={currentPart ? "page" : undefined}
+    >
+      Parts
+    </a>
+    <a href="/dev/" aria-current={isReview ? "page" : undefined}>Review</a>
+  </nav>
+</header>

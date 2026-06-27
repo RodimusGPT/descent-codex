@@ -5,7 +5,7 @@ import { PARTS } from "../lib/parts";
 ---
 
 <BaseLayout>
-  <main class="site-shell">
+  <main class="site-shell" id="main-content">
     <section class="landing-hero" aria-labelledby="page-title">
       <div class="landing-copy">
         <p class="eyebrow">A top-to-bottom LLM inference explainer</p>
@@ -14,6 +14,10 @@ import { PARTS } from "../lib/parts";
           Follow one generated token from the transformer, through number formats and
           serving software, down to the hardware work that makes inference happen.
         </p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a href="/parts/0-hook">Start the descent</a>
+          <a href="/dev/">Review M0-M3</a>
+        </div>
       </div>
       <aside class="hook-panel" aria-label="Hook placeholder">
         <div class="hook-panel__prompt">
