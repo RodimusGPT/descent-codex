@@ -113,6 +113,13 @@ deployment decision.
   </table>
 </section>
 
+<DeeperBlock summary="Why output can still vary">
+  The table describes the intended contract of each layer. In practice, low-level
+  numeric order, reduced precision, nondeterministic kernels, and sampling can
+  cause small output differences even when the model and prompt are nominally the
+  same.
+</DeeperBlock>
+
 The practical mental model is compact: the model decides the distribution, the
 sampler chooses from it, the serving engine keeps the loop full, and the hardware
 sets the capacity and bandwidth envelope. Most inference debugging is figuring

@@ -32,6 +32,10 @@ different from later token cadence. For `The GPU keeps KV cache ready for`,
 prefill handles the prompt tokens as a batch; the later <Token text="decode" />
 step is a single-position decode that reads the cached prompt.
 
+This cache is not a key-value database or a store of retrieved facts. It is cached
+attention state: tensors of key and value vectors created by earlier tokens so
+later decode steps do not recompute the whole prompt.
+
 <PrefillDecode client:visible />
 
 <DeeperBlock summary="KV-cache shape">
@@ -39,7 +43,9 @@ step is a single-position decode that reads the cached prompt.
   `2 * layers * kv_heads * head_dim * sequence_length * bytes_per_value`. GQA and
   MQA shrink the `kv_heads` term by sharing keys and values across query heads.
   MLA-style designs compress the stored key/value information into a latent form,
-  moving part of the memory problem back into projection math.
+  moving part of the memory problem back into projection math. This estimate is
+  for one sequence. For multiple active requests, multiply by the number of
+  sequences or batch slots, adjusted for their different sequence lengths.
 </DeeperBlock>
 
 <DeeperBlock summary="Why MLA-style cache compression exists">
@@ -85,7 +91,9 @@ table.
 ## Serving engines
 
 Different engines make different tradeoffs around portability, kernels,
-scheduling policy, and deployment target.
+scheduling policy, and deployment target. The right engine depends on where
+inference runs: local laptop, single-GPU server, multi-GPU cluster, or a workload
+with structured generation and agent-style request programs.
 
 <section className="engine-overview" aria-label="Serving engine overview">
   <article>

@@ -104,3 +104,6 @@ The agent maintains this file but does not self-certify visual correctness.
   for representative public pages, review pages, and dark-mode samples. The pass found direct MDX
   section headings were too visually subdued between large interactive cards; article `h2` styling
   was strengthened for better long-page scanability.
+- Content clarity pass on June 28, 2026: added background education for recurring objects
+  (`token IDs`, vectors, logits, bytes), matrix multiplication, training vs inference, KV cache
+  scope, serving-engine choice, GPU memory hierarchy acronyms, GEMM, and output nondeterminism.

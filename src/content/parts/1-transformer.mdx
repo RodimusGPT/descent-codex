@@ -58,7 +58,8 @@ Embeddings tell the model what each token is, but not where it is. A transformer
 also needs position information so `cache ready for decode` is different from
 `decode ready for cache`. Modern LLMs commonly use RoPE, or rotary positional
 embedding, which rotates query and key vectors in a position-dependent way before
-attention scores are computed.
+attention scores are computed. Query and key vectors are the attention comparison
+vectors explained below.
 
 During generation, attention is also causal. The token at position 5 can read
 positions 0 through 5, but it cannot read a future token that has not been
@@ -79,6 +80,11 @@ models typically use a pre-norm structure: RMSNorm prepares the stream, attentio
 moves information between tokens, a residual path keeps the original stream
 available, and a feed-forward block does per-token compute. Repeating that block
 lets shallow pattern matches turn into more abstract features.
+
+Most of that compute is matrix multiplication. A matrix multiply is a structured
+way to mix many input features into many output features at once. Instead of one
+handwritten rule, each layer applies learned number tables that transform the
+token vectors.
 
 <TransformerStack client:visible />
 
@@ -145,12 +151,13 @@ running only a smaller active fraction for a given token.
 ## Logits to token
 
 At the end of the stack, a projection maps the final hidden state to one logit per
-vocabulary item. Temperature changes how sharp the distribution is. Top-k keeps
-only the highest ranked candidates; top-p keeps the smallest set whose cumulative
-probability crosses a threshold. A token is sampled, appended to the context, and
-the whole loop repeats. That autoregressive loop is what makes the KV cache in
-Part 3 necessary. If the next sampled token is <Token text="decode" />, the next
-step runs again with `The GPU keeps KV cache ready for decode` as the longer
-context.
+vocabulary item. A logit is a raw score, not yet a probability. Softmax converts
+all vocabulary scores into probabilities that sum to 1. Temperature changes how
+sharp that distribution is. Top-k keeps only the highest ranked candidates; top-p
+keeps the smallest set whose cumulative probability crosses a threshold. A token
+is sampled, appended to the context, and the whole loop repeats. That
+autoregressive loop is what makes the KV cache in Part 3 necessary. If the next
+sampled token is <Token text="decode" />, the next step runs again with
+`The GPU keeps KV cache ready for decode` as the longer context.
 
 <SamplingPlayground client:visible />

@@ -31,6 +31,10 @@ the final vocabulary projection are all matrix-heavy. One weight is tiny on its
 own, but billions of them determine both capability and the minimum memory needed
 before a single token can be generated.
 
+Training is when those weights are changed. Inference is when already-trained
+weights are read and used. The serving system is not learning from this prompt or
+editing the checkpoint; it is running the fixed numbers that training produced.
+
 <WeightZoom client:visible />
 
 ## Floating point

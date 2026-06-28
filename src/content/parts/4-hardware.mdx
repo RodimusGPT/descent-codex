@@ -31,6 +31,10 @@ L2 and then HBM. HBM is huge compared with SRAM and reaches terabytes per second
 but local SRAM is much faster. Good inference kernels move data into the small
 fast spaces, reuse it, and avoid returning to HBM until they must.
 
+The names are hardware locality clues. SMs are GPU compute clusters. SRAM is
+small, fast on-chip memory. L2 is a larger shared cache. HBM is high-bandwidth
+memory: much larger than on-chip memory, but farther away.
+
 <GpuFloorplan client:visible />
 
 <DeeperBlock summary="Why near memory matters">
@@ -47,7 +51,8 @@ layers, MoE experts, and the final vocabulary projection. Hardware runs those
 GEMMs as tiles. A tile of A and a tile of B are staged near the tensor cores,
 multiplied, accumulated, and advanced through the matrix. Precision support such
 as FP16, FP8, or FP4 changes how many operands fit and how much bandwidth each
-tile consumes.
+tile consumes. GEMM means general matrix multiply, the standard name for this
+large batched multiply-and-accumulate operation.
 
 <GemmTiling client:visible />
 

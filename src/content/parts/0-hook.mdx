@@ -27,6 +27,13 @@ longer prompt. That simple loop is why the rest of the descent matters. The mode
 creates the distribution, weights store what it learned, serving software keeps
 the loop efficient, and hardware supplies the matrix math and memory bandwidth.
 
+<DeeperBlock summary="Four recurring objects">
+  Four objects will keep coming back. Token IDs are integer labels for pieces of
+  text. Vectors are lists of numbers that carry model state. Logits are raw scores
+  before they become probabilities. Bytes are the memory traffic that decides
+  whether serving is fast or slow.
+</DeeperBlock>
+
 <DeeperBlock summary="Autoregressive loop">
   Autoregressive generation means `context -> logits -> sample -> append -> repeat`.
   The model is not planning the whole answer in one pass. It is repeatedly scoring
