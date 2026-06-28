@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Part } from "../../lib/parts";
+import { partHref } from "../../lib/routes";
 
 type ProgressRailProps = {
   currentPart: number;
@@ -42,7 +43,7 @@ const ProgressRail = ({ currentPart, parts }: ProgressRailProps) => {
         <a
           aria-current={part.index === currentPart ? "page" : undefined}
           aria-label={`Part ${part.index}: ${part.title}`}
-          href={`/parts/${part.slug}`}
+          href={partHref(part.slug)}
           key={part.slug}
           title={part.title}
         >

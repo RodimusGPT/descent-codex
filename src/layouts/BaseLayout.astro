@@ -3,6 +3,7 @@ import "katex/dist/katex.min.css";
 import "../styles/tokens.css";
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
+import { withoutBase } from "../lib/routes";
 
 type Props = {
   description?: string;
@@ -14,7 +15,7 @@ const {
   title = "Descent",
 } = Astro.props;
 const pageTitle = title === "Descent" ? title : `${title} | Descent`;
-const currentPath = Astro.url.pathname;
+const currentPath = withoutBase(Astro.url.pathname);
 ---
 
 <!doctype html>

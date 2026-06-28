@@ -1,6 +1,7 @@
 ---
 import ProgressRail from "../components/scroll/ProgressRail";
 import { PARTS } from "../lib/parts";
+import { partHref } from "../lib/routes";
 import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
@@ -30,7 +31,7 @@ const nextPart = PARTS.find((part) => part.index === partIndex + 1);
         PARTS.map((part) => (
           <a
             aria-current={part.slug === currentPart.slug ? "page" : undefined}
-            href={`/parts/${part.slug}`}
+            href={partHref(part.slug)}
           >
             <span>{part.index}</span>
             <strong>{part.title}</strong>
@@ -44,7 +45,7 @@ const nextPart = PARTS.find((part) => part.index === partIndex + 1);
     <nav class="part-pager" aria-label="Adjacent parts">
       {
         previousPart ? (
-          <a href={`/parts/${previousPart.slug}`}>
+          <a href={partHref(previousPart.slug)}>
             <span>Previous</span>
             <strong>
               {previousPart.index}. {previousPart.title}
@@ -56,7 +57,7 @@ const nextPart = PARTS.find((part) => part.index === partIndex + 1);
       }
       {
         nextPart ? (
-          <a href={`/parts/${nextPart.slug}`}>
+          <a href={partHref(nextPart.slug)}>
             <span>Next</span>
             <strong>
               {nextPart.index}. {nextPart.title}

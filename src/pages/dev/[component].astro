@@ -23,6 +23,7 @@ import Tokenizer from "../../components/viz/Tokenizer";
 import TransformerStack from "../../components/viz/TransformerStack";
 import WeightZoom from "../../components/viz/WeightZoom";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { devHref, withBase } from "../../lib/routes";
 import { SANDBOXES } from "../../lib/sandboxes";
 
 export function getStaticPaths() {
@@ -43,7 +44,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         <p class="eyebrow">Interactive review</p>
         <h1>{activeSandbox.label}</h1>
       </div>
-      <a href="/dev/">All sandboxes</a>
+      <a href={devHref()}>All sandboxes</a>
     </header>
 
     <div class="review-layout">
@@ -80,7 +81,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
             SANDBOXES.map((sandbox) => (
               <a
                 aria-current={sandbox.slug === activeSandbox.slug ? "page" : undefined}
-                href={sandbox.path}
+                href={withBase(sandbox.path)}
               >
                 <span>Part {sandbox.part}</span>
                 <strong>{sandbox.label}</strong>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { partHref, withBase } from "../../lib/routes";
 import { SANDBOXES } from "../../lib/sandboxes";
 ---
 
@@ -10,7 +11,7 @@ import { SANDBOXES } from "../../lib/sandboxes";
         <p class="eyebrow">Interactive review</p>
         <h1>Sandboxes</h1>
       </div>
-      <a href="/parts/0-hook">Open the descent</a>
+      <a href={partHref("0-hook")}>Open the descent</a>
     </header>
 
     <section class="review-overview" aria-labelledby="review-overview-title">
@@ -23,7 +24,7 @@ import { SANDBOXES } from "../../lib/sandboxes";
       <nav class="review-grid" aria-label="Interactive sandboxes">
         {
           SANDBOXES.map((sandbox) => (
-            <a href={sandbox.path}>
+            <a href={withBase(sandbox.path)}>
               <span>Part {sandbox.part}</span>
               <strong>{sandbox.label}</strong>
             </a>
