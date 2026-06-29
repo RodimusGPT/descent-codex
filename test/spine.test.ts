@@ -40,9 +40,10 @@ describe("descent spine", () => {
       "/dev/parallelism",
       "/dev/full-stack",
       "/dev/config",
+      "/dev/local-stack",
     ]);
     expect(SANDBOXES.map((sandbox) => sandbox.part)).toEqual([
-      0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5,
+      0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5,
     ]);
   });
 });

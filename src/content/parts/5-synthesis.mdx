@@ -8,6 +8,7 @@ accent: synthesis
 import ConfigSandbox from "../../components/viz/ConfigSandbox";
 import DeeperBlock from "../../components/scroll/DeeperBlock";
 import FullStackReplay from "../../components/viz/FullStackReplay";
+import LocalStackSelector from "../../components/viz/LocalStackSelector";
 import Token from "../../components/scroll/Token";
 
 # Put it together
@@ -54,6 +55,107 @@ deployment decision.
   transfer, parallelism strategy, and how much of the model is active for a token.
   It is still useful because the dominant terms are the same ones from the descent:
   weight bytes, KV cache bytes, and bandwidth.
+</DeeperBlock>
+
+## Choose the local stack
+
+The same local hardware can be a hobby box, a private team endpoint, or a fragile
+production service. The stack choice should follow the operating shape. A desktop
+runner solves one user's problem. A shared company service needs a serving engine,
+gateway, access control, telemetry, and an update policy.
+
+<LocalStackSelector client:visible />
+
+## What gaps remain?
+
+The local ecosystem is strong, but it is still uneven. Most tools solve one layer
+well; fewer tools make the whole local stack boring to operate.
+
+<section className="content-recap" aria-label="Local inference stack gaps">
+  <table>
+    <thead>
+      <tr>
+        <th>Gap</th>
+        <th>Why it matters</th>
+        <th>What fills it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Gap">Sizing guidance</td>
+        <td data-label="Why it matters">
+          Fit estimates are easy; reliable latency under real prompts and batches is harder.
+        </td>
+        <td data-label="What fills it">
+          Workload traces, context distributions, target concurrency, and benchmark runs on the
+          exact hardware.
+        </td>
+      </tr>
+      <tr>
+        <td data-label="Gap">Operations</td>
+        <td data-label="Why it matters">
+          Local APIs still need auth, quotas, logs, backups, model rollout, and rollback.
+        </td>
+        <td data-label="What fills it">
+          LiteLLM-style gateways, observability, model registry discipline, and an owner for
+          incidents.
+        </td>
+      </tr>
+      <tr>
+        <td data-label="Gap">Multi-GPU commodity serving</td>
+        <td data-label="Why it matters">
+          Consumer and workstation systems usually lack the interconnect and chassis assumptions
+          of datacenter clusters.
+        </td>
+        <td data-label="What fills it">
+          Careful PCIe planning, smaller models, single-node boundaries, or moving large workloads
+          to server hardware.
+        </td>
+      </tr>
+      <tr>
+        <td data-label="Gap">Cross-vendor maturity</td>
+        <td data-label="Why it matters">
+          NVIDIA has the broadest serving-engine support; AMD, Apple, and edge stacks can be
+          excellent but less uniform.
+        </td>
+        <td data-label="What fills it">
+          Choose the runtime before the hardware, or budget engineering time for conversion,
+          kernels, and fallback paths.
+        </td>
+      </tr>
+      <tr>
+        <td data-label="Gap">Evaluation</td>
+        <td data-label="Why it matters">
+          Quantization, model swaps, prompts, and tool changes can quietly alter behavior.
+        </td>
+        <td data-label="What fills it">
+          Golden prompts, task evals, safety checks, and versioned release notes for every model
+          update.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<DeeperBlock summary="Survey boundary and sources">
+  This survey is current as of June 29, 2026 and focuses on new commodity hardware
+  an individual or company can buy online. Reference docs and product pages
+  include [llama.cpp](https://github.com/ggml-org/llama.cpp),
+  [Ollama](https://docs.ollama.com/),
+  [LM Studio](https://lmstudio.ai/docs/developer/openai-compat),
+  [MLX-LM](https://github.com/ml-explore/mlx-lm),
+  [vLLM](https://docs.vllm.ai/), [SGLang](https://docs.sglang.ai/),
+  [TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/),
+  [TGI](https://huggingface.co/docs/text-generation-inference/index),
+  [LiteLLM](https://docs.litellm.ai/docs/proxy/quick_start),
+  [Open WebUI](https://docs.openwebui.com/),
+  [Ray Serve LLM](https://docs.ray.io/en/latest/serve/llm/index.html),
+  [NVIDIA Dynamo](https://github.com/ai-dynamo/dynamo), and
+  [NVIDIA GPU Operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.html).
+  Hardware references include RTX 5090, RTX PRO 6000 Blackwell, DGX Spark, Jetson
+  Thor, Apple M3 Ultra, AMD Ryzen AI Max, and Radeon AI PRO. Prices and
+  cloud-only products are intentionally out of scope because they change too
+  quickly for this explainer.
 </DeeperBlock>
 
 ## What changes behavior?

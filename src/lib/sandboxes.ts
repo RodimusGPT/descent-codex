@@ -25,7 +25,8 @@ export type Sandbox = {
     | "roofline"
     | "parallelism"
     | "full-stack"
-    | "config";
+    | "config"
+    | "local-stack";
   title: string;
 };
 
@@ -190,5 +191,12 @@ export const SANDBOXES = [
     path: "/dev/config",
     slug: "config",
     title: "Config sandbox",
+  },
+  {
+    label: "Local stack selector",
+    part: 5,
+    path: "/dev/local-stack",
+    slug: "local-stack",
+    title: "Local stack selector",
   },
 ] as const satisfies readonly Sandbox[];

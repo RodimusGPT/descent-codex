@@ -8,6 +8,7 @@ import FloatExploder from "../../components/viz/FloatExploder";
 import FullStackReplay from "../../components/viz/FullStackReplay";
 import GemmTiling from "../../components/viz/GemmTiling";
 import GpuFloorplan from "../../components/viz/GpuFloorplan";
+import LocalStackSelector from "../../components/viz/LocalStackSelector";
 import MemoryBudget from "../../components/viz/MemoryBudget";
 import MoERouter from "../../components/viz/MoERouter";
 import PagedAttention from "../../components/viz/PagedAttention";
@@ -72,6 +73,7 @@ const activeSandbox = SANDBOXES.find((sandbox) => sandbox.slug === component) ??
         {component === "parallelism" ? <Parallelism client:load /> : null}
         {component === "full-stack" ? <FullStackReplay client:load /> : null}
         {component === "config" ? <ConfigSandbox client:load /> : null}
+        {component === "local-stack" ? <LocalStackSelector client:load /> : null}
       </section>
 
       <aside class="review-sidebar" aria-label="Interactive sandbox navigation">

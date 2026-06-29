@@ -126,6 +126,65 @@ with structured generation and agent-style request programs.
   </article>
 </section>
 
+## Local inference stack map
+
+For local and company-owned compute, "the stack" is usually not one product. It
+is a chain of model format, runtime, API surface, UI, routing layer, and
+operations. A solo builder can stop near the top of the stack. A company running
+shared inference needs the lower layers too.
+
+<section className="stack-map" aria-label="Local inference stack layers">
+  <article>
+    <h3>Model files and formats</h3>
+    <p>
+      Hugging Face repositories, `safetensors`, GGUF, GPTQ, AWQ, and EXL2-style
+      artifacts decide which runtimes can load the model and how much conversion
+      work exists before serving.
+    </p>
+  </article>
+  <article>
+    <h3>Local runners</h3>
+    <p>
+      Ollama, LM Studio, Jan, llama.cpp, MLX-LM, LocalAI, and llamafile optimize
+      for quick local use, desktop UX, simple model management, or broad CPU/GPU
+      portability. ExLlamaV2 and TabbyAPI sit closer to the GPU-specialist path
+      for quantized local serving.
+    </p>
+  </article>
+  <article>
+    <h3>Production engines</h3>
+    <p>
+      vLLM, SGLang, TensorRT-LLM, NVIDIA NIM, and Hugging Face TGI focus on
+      server behavior: batching, KV-cache management, quantization paths, tensor
+      parallelism, and OpenAI-compatible endpoints.
+    </p>
+  </article>
+  <article>
+    <h3>Gateway and app layer</h3>
+    <p>
+      LiteLLM, Open WebUI, AnythingLLM, and similar surfaces add model routing,
+      user-facing chat, provider-compatible APIs, RAG workflows, and a place to
+      enforce usage policy.
+    </p>
+  </article>
+  <article>
+    <h3>Fleet control</h3>
+    <p>
+      Docker with NVIDIA Container Toolkit is the small-server baseline.
+      Kubernetes with GPU Operator, Ray Serve LLM, Dynamo, KServe, or llm-d
+      becomes relevant when placement, scaling, and multi-node scheduling matter.
+    </p>
+  </article>
+</section>
+
+<DeeperBlock summary="Why the stack splits">
+  Desktop tools hide enough complexity to make one-user inference pleasant. Shared
+  serving has different failure modes: model files need versioning, APIs need
+  authentication, requests need quotas, and GPU memory must be scheduled. The
+  serving engine can make tokens fast, but it does not by itself solve access
+  control, evaluation, observability, or incident response.
+</DeeperBlock>
+
 ## Speculative decoding
 
 Decode is serial, but it can still be accelerated. Speculative decoding runs a

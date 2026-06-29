@@ -111,3 +111,69 @@ parallelism helps when MoE experts do not all need to be active for each token.
   all-to-all routing. It matters when one device cannot fit the model or when
   throughput gains outweigh the added network traffic.
 </DeeperBlock>
+
+## Commodity hardware field guide
+
+The local hardware market now spans laptops, mini desktops, consumer GPUs,
+workstation GPUs, small rack servers, and edge kits. The useful question is not
+which device has the biggest TOPS number. It is which device has enough memory,
+bandwidth, cooling, power, and software support for the model and request pattern.
+
+<section className="hardware-field" aria-label="Commodity local inference hardware">
+  <article>
+    <h3>Laptop and mini systems</h3>
+    <p>
+      Apple Silicon Macs, AMD Ryzen AI Max systems, and similar unified-memory
+      boxes are practical for small and mid-size quantized models. They are quiet
+      and simple, but shared serving headroom is limited.
+    </p>
+  </article>
+  <article>
+    <h3>Desktop GPU</h3>
+    <p>
+      A 32 GB class card such as RTX 5090 or Radeon AI PRO R9700 is a strong
+      local lab target. It fits many 7B-32B workflows, but 70B class models force
+      aggressive quantization and careful context limits.
+    </p>
+  </article>
+  <article>
+    <h3>Workstation GPU</h3>
+    <p>
+      A 96 GB class card such as RTX PRO 6000 Blackwell moves local inference
+      into team-server territory. The extra VRAM matters for larger models,
+      longer contexts, and multiple active sessions.
+    </p>
+  </article>
+  <article>
+    <h3>AI desktop appliance</h3>
+    <p>
+      DGX Spark-style Grace Blackwell systems and high-memory unified desktops
+      trade replaceable parts for a compact local box with more memory headroom
+      than ordinary consumer PCs.
+    </p>
+  </article>
+  <article>
+    <h3>Small server</h3>
+    <p>
+      A tower or rack server with 1-4 GPUs adds remote access, more storage, and
+      a path to team traffic. PCIe lanes, cooling, power, and noisy failure modes
+      become first-order design constraints.
+    </p>
+  </article>
+  <article>
+    <h3>Edge kit</h3>
+    <p>
+      Jetson Thor-class hardware is for local, embedded, robotics, and appliance
+      inference where power envelope and physical deployment matter as much as
+      raw throughput.
+    </p>
+  </article>
+</section>
+
+<DeeperBlock summary="Used datacenter GPUs">
+  Used datacenter GPUs can be attractive when memory capacity is the blocker, but
+  they move risk into platform compatibility, cooling, power connectors, driver
+  support, and warranty. For a reliable small-company stack, new commodity
+  hardware is easier to reason about unless someone owns server assembly and
+  operations.
+</DeeperBlock>
